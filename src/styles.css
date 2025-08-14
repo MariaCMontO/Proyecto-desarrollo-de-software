@@ -1,6 +1,6 @@
 :root{
     /* Colores */
-    --azul-oscuro-fondo:#1E1E24; 
+    --azul-oscuro-fondo:#f4f4fa; 
     --azul-medio:#282830;
     --rojo-vibrante:#FF6464;
     /* Fuentes */
@@ -19,3 +19,4 @@
 body{
     background: var(--azul-oscuro-fondo);
 }
+
