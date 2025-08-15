@@ -1,22 +1,24 @@
-:root{
-    /* Colores */
-    --azul-oscuro-fondo:#f4f4fa; 
-    --azul-medio:#282830;
-    --rojo-vibrante:#FF6464;
-    /* Fuentes */
-    --parrafos: "Nixie One", system-ui;
-    --titulos:"PT Sans Narrow", sans-serif;
-    --banner-principal:"Caveat", cursive;
-    --banner-secundario:"Bangers", system-ui;
+:root {
+  /* Colores */
+  --azul-oscuro-fondo: #f4f4fa;
+  --azul-medio: #282830;
+  --rojo-vibrante: #ff6464;
+  /* Fuentes */
+  --parrafos: "Nixie One", system-ui;
+  --titulos: "PT Sans Narrow", sans-serif;
+  --banner-principal: "Caveat", cursive;
+  --banner-secundario: "Bangers", system-ui;
 }
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    background: var(--azul-oscuro-fondo);
+body {
+  margin: 0 auto;
+  width: 100%;
+  height: 80%;
+  background: var(--azul-oscuro-fondo);
 }
-

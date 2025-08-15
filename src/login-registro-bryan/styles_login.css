@@ -1,0 +1,161 @@
+:root {
+    /* Colores */
+    --azul-oscuro-fondo: #1e1e24;
+    --azul-medio: #282830;
+    --rojo-vibrante: #ff6464;
+    /* Fuentes */
+    --parrafos: "Nixie One", system-ui;
+    --titulos: "PT Sans Narrow", sans-serif;
+    --banner-principal: "Caveat", cursive;
+    --banner-secundario: "Bangers", system-ui;
+}
+
+* {
+    margin: 0px auto;
+    padding: 0px auto;
+    overflow: hidden;
+}
+
+body {
+    background: var(--azul-oscuro-fondo);
+}
+
+.clearfix {
+    float: none;
+    clear: both;
+}
+
+.login {
+    margin: 40px auto;
+    width: 1100px;
+    height: 600px;
+    border-radius: 90px;
+    border: 2px solid gray;
+}
+
+#vanished {
+    position: relative;
+    position: fixed;
+    margin-top: -40px;
+    margin-left: 40px;
+    width: 880px;
+    opacity: 0.1;
+
+}
+
+.imagenes {
+    float: left;
+    margin-left: 20px;
+}
+
+#logo {
+    display: block;
+    width: 400px;
+    margin: 0px auto;
+}
+
+#hamburguesa2 {
+    display: block;
+    width: 500px;
+    margin: 0px auto;
+    margin-top: -120px;
+}
+
+.formulario {
+    display: block;
+    float: right;
+    width: 380px;
+    margin-right: 80px;
+    height: 500px;
+    padding: 20px;
+    margin-top: 30px;
+    background-color: var(--azul-medio);
+    border-radius: 90px;
+}
+
+.formulario h2 {
+    display: block;
+    color: ghostwhite;
+    text-align: center;
+    margin: 20px;
+    padding: 10px;
+    font-family: var(--titulos);
+    font-size: 50px;
+}
+
+.formulario input {
+    display: block;
+    width: 80%;
+    height: 30px;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 90px;
+    background-color: whitesmoke;
+    padding-inline-start: 30px;
+    font-family: var(--parrafos);
+    font-size: 16px;
+}
+
+.formulario input::placeholder {
+    color: black;
+    font-size: 16px;
+}
+
+.formulario label {
+    display: block;
+    text-align: left;
+    width: 75%;
+    padding: 5px;
+    margin-bottom: 5px;
+    font-family: var(--titulos);
+    color: azure;
+    font-size: 20px;
+}
+
+#reset {
+    float: right;
+    margin-top: 10px;
+    font-family: var(--parrafos);
+    font-weight: bolder;
+    color: azure;
+    padding-right: 4px;
+    font-size: 14px;
+}
+
+#reset:hover {
+    color: var(--rojo-vibrante);
+    text-decoration: underline;
+}
+
+#ingresar {
+    padding: 0px !important;
+    margin-top: 80px;
+    background-color: var(--rojo-vibrante);
+    width: 76%;
+    height: 55px;
+    font-family: var(--titulos);
+    font-size: x-large !important;
+    color: azure;
+}
+
+#ingresar:hover {
+    border: 1px solid whitesmoke;
+    box-shadow: inset 1px 1px 1px 1px ghostwhite
+}
+
+#registrate {
+    display: block;
+    margin: 0px auto;
+    text-align: center;
+    margin-top: 12px;
+    font-family: var(--parrafos);
+    font-weight: bolder;
+    font-size: 14px;
+    color: azure;
+    padding-right: 4px;
+}
+
+#registrate:hover {
+    color: var(--rojo-vibrante);
+    text-decoration: underline;
+}
