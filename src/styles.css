@@ -1,24 +1,118 @@
-:root {
-  /* Colores */
-  --azul-oscuro-fondo: #f4f4fa;
-  --azul-medio: #282830;
-  --rojo-vibrante: #ff6464;
-  /* Fuentes */
-  --parrafos: "Nixie One", system-ui;
-  --titulos: "PT Sans Narrow", sans-serif;
-  --banner-principal: "Caveat", cursive;
-  --banner-secundario: "Bangers", system-ui;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* Tipografías personalizadas */
 body {
-  margin: 0 auto;
+  margin: 0;
+  font-family: 'PT Sans Narrow', sans-serif;
+  background-color: #1e1e24;
+  color: #f4f4fa;
+}
+
+/* Navegación */
+.navegacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #282830;
+  padding: 0.2rem 2rem;
+}
+
+.navegacion_izquierda {
+  display: flex;
+  align-items: center;
+  gap: 15rem;
+  font-family: 'Popins', sans-serif;
+  margin-left: 10rem;
+  font-size: 1rem;
+}
+
+.logo {
+  height: 150px;
+}
+
+/* Menú de navegación */
+.navegacion_menu {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex: 1;
+  font-family: 'Nixie One', system-ui;
+  font-size: 1rem;
+}
+
+.navegacion_menu p {
+  margin: 0;
+  color: #ccc;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navegacion_menu p:hover {
+  color: #ff4d6d;
+text-decoration: underline; 
+}
+
+/* Botón de pedido */
+.navegacion_boton-realizar-pedido {
+  background-color: #ff4d6d;
+  color: white;
+  border: none;
+  margin-right: 5rem;
+  padding: 1.1rem 1.5rem;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.navegacion_boton-realizar-pedido:hover {
+  background-color: #ff1f4b;
+}
+
+/* Contenido principal */
+main {
+  text-align: center;
+  padding: 0rem 0rem;
+}
+
+/* Contenedor del banner */
+.banner {
+  position: relative;
   width: 100%;
-  height: 80%;
-  background: var(--azul-oscuro-fondo);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Imagen del banner */
+.banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: -10rem;
+}
+
+/* Texto superpuesto */
+.banner_texto {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #cce7ff;
+  width: 200%;
+}
+
+/* Estilos del texto */
+.banner_texto p:first-of-type {
+  font-family: 'Caveat', cursive;
+  font-size: 5rem;
+  margin: 0;
+  color: #ffffff;
+}
+
+.banner_texto p:last-of-type {
+  font-family: 'Bangers', system-ui;
+  font-size: 6rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0;
+  color: #ffffff;
 }
