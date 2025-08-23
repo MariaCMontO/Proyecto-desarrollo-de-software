@@ -1,0 +1,39 @@
+.contenedorPrincipal{
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.contenedor{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 83px;
+    padding: 18px;
+    gap: 10px;
+    border-radius: 20px;
+    background-color: var(--azul-medio);
+    cursor: pointer;
+}
+
+.contenedor:hover{
+    border: 2px solid var(--rojo-vibrante);
+}
+
+.imagen{
+    width: 45px;
+    height: 45px;
+}
+
+.texto{
+    color: white;
+    font-family: var(--parrafos);
+    font-size: 20px;
+}
+
+@media (max-width: 768px) {
+    .texto{
+        font-size: 18px;
+    }
+}
