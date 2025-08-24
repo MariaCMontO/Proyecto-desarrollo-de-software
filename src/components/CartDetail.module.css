@@ -103,8 +103,30 @@
     color: white;
     font-size: 10px;
     font-weight: bold;
+    text-align: center;
 }
 
 .subtotal span{
     color: var(--rojo-vibrante);   
+}
+
+.nota{
+    font-family: var(--parrafos);
+    color: white;
+    font-size: 10px;
+}
+
+.editarBoton{
+    background-color: transparent;
+    border: none;
+    width: 15px;
+    cursor: pointer;
+}
+
+.editarImagen{
+    width: 15px;
+}
+
+.contenedorNota{
+    display: flex;
 }

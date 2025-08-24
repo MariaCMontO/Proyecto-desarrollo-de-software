@@ -17,7 +17,7 @@ export const carritoReducer = (state = stateInicial, action) => {
     let copiaCarrito = [...state.carrito];
 
     if (indiceProducto < 0) {
-      const nuevoProducto = { ...action.payload.producto, cantidad: 1 };
+      const nuevoProducto = { ...action.payload.producto, cantidad: 1, nota:"" };
       copiaCarrito = [...state.carrito, nuevoProducto];
     }
 
@@ -104,6 +104,30 @@ export const carritoReducer = (state = stateInicial, action) => {
     return {
       ...state,
       carrito: [],
+    };
+  }
+
+  if(action.type=== 'Agregar nota'){
+    //Buscar el indice donde se encuentra el producto
+    const producto = state.carrito.find(
+      (producto) => producto.id === action.payload.producto.id
+    );
+
+    let nuevoCarrito = [];
+
+    if (producto) {
+      nuevoCarrito = state.carrito.map((item) => {
+        if (item.id === action.payload.producto.id) {
+          return { ...item, nota: action.payload.nota };
+        } else {
+          return { ...item };
+        }
+      });
+    }
+
+    return {
+      ...state,
+      carrito: nuevoCarrito,
     };
   }
 

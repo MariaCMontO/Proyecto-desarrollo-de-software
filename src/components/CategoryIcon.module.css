@@ -17,6 +17,11 @@
     cursor: pointer;
 }
 
+.activo{
+    border: 2px solid var(--rojo-vibrante);
+    border-radius: 20px;
+}
+
 .contenedor:hover{
     border: 2px solid var(--rojo-vibrante);
 }
