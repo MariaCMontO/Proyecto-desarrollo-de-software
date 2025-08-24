@@ -10,12 +10,6 @@
     --banner-secundario: "Bangers", system-ui;
 }
 
-* {
-    margin: 0px auto;
-    padding: 0px auto;
-    overflow: hidden;
-}
-
 body {
     background: var(--azul-oscuro-fondo);
 }
