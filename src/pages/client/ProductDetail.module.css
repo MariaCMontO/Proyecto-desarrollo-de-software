@@ -6,6 +6,7 @@
     flex-direction: column;
     gap: 12px;
     padding: 15px;
+    cursor: pointer;
 }
 
 .contenedorImagen{
@@ -42,6 +43,11 @@
     font-size: 14px;
     padding: 5px;
     cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.boton:hover{
+    background-color: #fc4444;
 }
 
 @media (max-width: 768px) {

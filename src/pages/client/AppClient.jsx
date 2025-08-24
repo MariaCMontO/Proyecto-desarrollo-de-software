@@ -5,6 +5,7 @@ import data from "../../data/productData.json";
 import ProductDetail from "./ProductDetail";
 import CartDetail from "../../components/CartDetail";
 import CartSumary from "../../components/CartSumary";
+import { useCarritoContext } from "../../context/carritoContext";
 
 export default function AppClient() {
   const nav = [
@@ -20,6 +21,8 @@ export default function AppClient() {
     { nombre: "Pizzas", imagen: "/icon_pizza.svg" },
   ];
 
+  const { state, dispatch } = useCarritoContext();
+
   return (
     <main className={styles.contenedor}>
       <div className={styles.nav}>
@@ -32,9 +35,9 @@ export default function AppClient() {
               <img src="/menu_hamburguesa.svg" alt="" />
             </button>
             <div className={styles.categoria}>
-            {icons.map((categoria) => (
-              <CategoryIcon key={categoria.imagen} categoria={categoria} />
-            ))}
+              {icons.map((categoria) => (
+                <CategoryIcon key={categoria.imagen} categoria={categoria} />
+              ))}
             </div>
             <button className={styles.botonCarrito}>
               <img src="/cart_icon.svg" alt="" />
@@ -42,12 +45,7 @@ export default function AppClient() {
           </div>
           <div className={styles.productContainer}>
             {data.map((product) => (
-              <ProductDetail
-                key={product.id}
-                imagen={product.imagen}
-                nombre={product.nombre}
-                precio={product.precio}
-              />
+              <ProductDetail key={product.id} producto={product} />
             ))}
           </div>
         </div>
@@ -55,24 +53,12 @@ export default function AppClient() {
           <img className={styles.logo} src="/Logo.png" alt="" />
           <div className={styles.contenedorFlex}>
             <p className={styles.texto}>ORDEN</p>
-            <button className={styles.vaciarBoton}>Vaciar carrito</button>
+            <button onClick={() => dispatch({type:"Vaciar carrito"})} className={styles.vaciarBoton}>Vaciar carrito</button>
           </div>
           <div className={styles.carrito}>
-            <CartDetail
-              imagen="/hamburguesas_01.jpg"
-              nombre="Big Melt Supreme"
-              precio="30.000"
-            />
-            <CartDetail
-              imagen="/hamburguesas_01.jpg"
-              nombre="Big Melt Supreme"
-              precio="30.000"
-            />
-            <CartDetail
-              imagen="/hamburguesas_01.jpg"
-              nombre="Big Melt Supreme"
-              precio="30.000"
-            />
+            {state.carrito.map((producto) => (
+              <CartDetail key={producto.id} producto={producto} />
+            ))}
           </div>
           <div className={styles.resumen}>
             <CartSumary />

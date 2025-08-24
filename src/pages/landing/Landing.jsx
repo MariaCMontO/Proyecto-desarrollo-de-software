@@ -9,6 +9,10 @@ export default function Landing() {
       <Link to="/cliente">
         <button>Realizar pedido</button>
       </Link>
+
+      <Link to={"/registro"}>
+      <button>Registro</button>
+      </Link>
     </>
   );
 }
