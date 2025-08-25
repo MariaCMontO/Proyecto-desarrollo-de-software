@@ -45,6 +45,7 @@
 .imagen {
   position: absolute;
   top: -90px;
+  left: 0;
   opacity: 1;
   border-radius: 20px;
   width: 550px;
