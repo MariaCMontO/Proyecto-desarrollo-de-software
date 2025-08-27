@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import styles from './Landing.module.css';
+import styles from "./Landing.module.css";
 
 export default function Landing() {
-
   return (
     <div>
       <header>
@@ -16,9 +15,11 @@ export default function Landing() {
               <p>Contacto</p>
             </div>
           </div>
-          <button className={styles.navegacion_boton_realizar_pedido}>
-            Realizar Pedido
-          </button>
+          <Link to="/cliente">
+            <button className={styles.navegacion_boton_realizar_pedido}>
+              Realizar Pedido
+            </button>
+          </Link>
         </nav>
       </header>
       <main>
@@ -31,10 +32,6 @@ export default function Landing() {
         </div>
       </main>
 
-      <Link to="/cliente">
-        <button>Realizar pedido</button>
-      </Link>
-
       <Link to={"/registro"}>
         <button>Registro</button>
       </Link>
@@ -42,6 +39,7 @@ export default function Landing() {
       <Link to={"/login"}>
         <button>Login</button>
       </Link>
+
     </div>
   );
 }

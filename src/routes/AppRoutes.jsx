@@ -4,6 +4,9 @@ import Login from "../pages/login/Login";
 import Registration from "../pages/login/Registration";
 import AppClients from "../pages/client/AppClient";
 import AppAdmin from "../pages/admin/AppAdmin";
+import Profile from "../pages/client/Profile";
+import Historial from "../pages/client/Historial";
+import Payment from "../pages/client/Payment";
 
 export default function AppRoutes() {
   return (
@@ -19,6 +22,15 @@ export default function AppRoutes() {
 
       {/* App Clients*/}
       <Route path="/cliente" element={<AppClients />} />
+
+      {/* Clients profile*/}
+      <Route path="/perfil" element={<Profile />} />
+
+      {/* Clients record*/}
+      <Route path="/historial" element={<Historial />} />
+
+      {/* Clients payment receipt*/}
+      <Route path="/pago" element={<Payment />} />
 
       {/* App Admin*/}
       <Route path="/admin" element={<AppAdmin />} />

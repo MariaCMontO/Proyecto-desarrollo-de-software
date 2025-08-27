@@ -131,3 +131,12 @@
 .contenedorNota{
     display: flex;
 }
+
+.hidden{
+    display: none;
+}
+
+.centrado{
+    width: fit-content;
+    padding: 10px;
+}

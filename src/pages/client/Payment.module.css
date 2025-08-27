@@ -1,0 +1,16 @@
+.boton {
+  width: fit-content;
+  background-color: var(--rojo-vibrante);
+  color: white;
+  font-family: var(--titulos);
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  padding-block: 5px;
+  padding-inline: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.boton:hover {
+  background-color: #fc4444;
+}
