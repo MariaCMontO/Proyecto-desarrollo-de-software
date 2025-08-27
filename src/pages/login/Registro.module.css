@@ -22,48 +22,53 @@ body {
 .login {
     display: flex;
     justify-content: center;
-    margin: 40px auto;
-    width: 1100px;
-    height: 900px;
+    margin: 20px auto;
+    width: 500px;
+    height: 640px;
+    margin-top: -30px;
+    margin-left: 500px;
 }
 
 .vanished {
     position: absolute;
-    margin-top: -640px;
-    margin-left: 160px;
-    width: 1580px;
+    left: 240px;
+    top: 30px;
     opacity: 0.6;
     z-index: -1;
+    width: 70%;
+    object-fit: cover;
+    object-position: 50% 50%;
 }
 
 .formulario {
-    width: 500px;
-    height: 720px;
-    padding: 20px;
-    margin-top: 20px;
+    width: 36%;
+    height: 630px;
     background-color: var(--azul-medio);
     border-radius: 90px;
     opacity: 0.9;
+    margin-left: 32%;
+    margin-top: -20px;
 }
 
 .formulario h2 {
     display: block;
     color: ghostwhite;
     text-align: center;
-    margin: 20px;
-    padding: 10px;
+    margin: 14px;
+    padding: 5px;
     font-family: var(--titulos);
     font-size: 50px;
-    margin-top: 10px;
     font-weight: bolder;
 }
 
-.formulario input {
+.formulario input[type="text"],
+input[type="password"] {
     display: block;
     width: 80%;
-    height: 30px;
+    height: 35px;
     padding: 5px;
     margin-bottom: 10px;
+    margin-left: 45px;
     border-radius: 90px;
     background-color: whitesmoke;
     padding-inline-start: 30px;
@@ -72,7 +77,8 @@ body {
     font-weight: bolder;
 }
 
-.formulario input::placeholder {
+.formulario input[type="text"],
+input[type="password"]::placeholder {
     color: black;
     font-size: 16px;
 }
@@ -83,40 +89,276 @@ body {
     width: 75%;
     padding: 5px;
     margin-bottom: 5px;
+    margin-left: 45px;
     font-family: var(--titulos);
     color: azure;
     font-size: 20px;
 }
 
-.terminos {
+.contenedor_terminos {
+    display: flex;
+}
+
+.check_terminos {
     display: block;
     float: left;
     width: 20px;
     margin: 0px auto;
-    margin-left: 50px;
+    margin-left: 100px;
     margin-top: 2px;
     background-color: var(--azul-oscuro-fondo);
     border-radius: 50%;
 }
 
-.term_cond {
+.texto_terminos {
     margin: 0px auto !important;
-    width: 220px !important;
-    margin-right: 480px !important;
+    width: 420px !important;
 }
 
-.registrarse {
+.formulario input[type="submit"] {
     padding: 0px !important;
-    margin-top: 25px;
+    margin-top: 15px;
+    margin-left: 18%;
     background-color: var(--rojo-vibrante);
-    width: 76%;
-    height: 55px;
+    width: 60%;
+    height: 40px;
     font-family: var(--titulos);
     font-size: x-large !important;
     color: azure;
 }
 
-.registrarse:hover {
+.formulario input[type="submit"]:hover {
     border: 1px solid whitesmoke;
-    box-shadow: inset 1px 1px 1px 1px ghostwhite
+    box-shadow: inset 1px 1px 1px 1px ghostwhite;
+    cursor: pointer;
+}
+
+.back {
+    padding: 0px !important;
+    margin-top: 20px;
+    margin-left: 20px;
+    background-color: var(--rojo-vibrante);
+    width: 80px;
+    height: 30px;
+    font-family: var(--titulos);
+    font-size: medium !important;
+    color: azure;
+    opacity: 0.8;
+
+}
+
+.back:hover {
+    border: 1px solid whitesmoke;
+    box-shadow: inset 1px 1px 1px 1px ghostwhite;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+
+    .registro {
+        width: 460px;
+        height: 520px;
+        margin-top: 20px;
+        margin-left: 5%;
+    }
+
+    .vanished {
+        position: absolute;
+        left: 120px;
+        opacity: 0.6;
+        z-index: -1;
+        width: 500px !important;
+        object-fit: cover;
+        object-position: 50% 50%;
+        top: 30%;
+    }
+
+    .formulario {
+        width: 80%;
+        height: 550px !important;
+        background-color: var(--azul-medio);
+        border-radius: 90px;
+        opacity: 0.9;
+        margin-left: 140px;
+    }
+
+    .formulario h2 {
+        display: block;
+        color: ghostwhite;
+        text-align: center;
+        margin: 0px auto;
+        padding-top: 10px;
+        font-family: var(--titulos);
+        font-size: 40px;
+        font-weight: bolder;
+    }
+
+    .formulario input[type="text"],
+    input[type="password"] {
+        display: block;
+        width: 75%;
+        height: 35px;
+        padding: 5px;
+        margin-bottom: 8px;
+        margin-left: 12%;
+        border-radius: 90px;
+        background-color: whitesmoke;
+        padding-inline-start: 30px;
+        font-family: var(--parrafos);
+        font-size: 14px;
+        font-weight: bolder;
+    }
+
+    .formulario input[type="text"],
+    input[type="password"]::placeholder {
+        color: black;
+        font-size: 14px;
+    }
+
+    .formulario label {
+        display: block;
+        text-align: left;
+        width: 75%;
+        padding: 4px;
+        margin-bottom: 5px;
+        margin-left: 14%;
+        font-family: var(--titulos);
+        color: azure;
+        font-size: 18px;
+    }
+
+    .contenedor_terminos {
+        display: flex;
+        margin-left: -40px !important;
+    }
+
+    .formulario input[type="submit"] {
+        padding: 0px !important;
+        margin-top: 10px;
+        margin-left: 31%;
+        background-color: var(--rojo-vibrante);
+        width: 38%;
+        height: 32px;
+        font-family: var(--titulos);
+        font-size: large !important;
+        color: azure;
+    }
+
+    .back {
+        padding: 0px !important;
+        margin-top: 20px;
+        margin-left: 20px;
+        background-color: var(--rojo-vibrante);
+        width: 80px;
+        height: 30px;
+        font-family: var(--titulos);
+        font-size: medium !important;
+        color: azure;
+        opacity: 0.8;
+
+    }
+}
+
+
+@media (max-width: 375px) {
+    .registro {
+        width: 350px;
+        height: 540px;
+        margin-top: 40px !important;
+        margin-left: -42px !important;
+    }
+
+    .vanished {
+        position: absolute;
+        left: 10px;
+        opacity: 0.6;
+        z-index: -1;
+        width: 350px !important;
+        object-fit: cover;
+        object-position: 50% 50%;
+        top: 30%;
+    }
+
+    .formulario {
+        width: 88%;
+        height: 90%;
+        background-color: var(--azul-medio);
+        border-radius: 90px;
+        opacity: 0.9;
+    }
+
+    .formulario h2 {
+        display: block;
+        color: ghostwhite;
+        text-align: center;
+        margin: 10px;
+        font-family: var(--titulos);
+        font-size: 25px;
+        font-weight: bolder;
+    }
+
+    .formulario input[type="text"],
+    input[type="password"] {
+        display: block;
+        width: 70%;
+        height: 30px;
+        padding: 5px;
+        margin-bottom: 8px;
+        margin-left: 45px;
+        border-radius: 90px;
+        background-color: whitesmoke;
+        padding-inline-start: 30px;
+        font-family: var(--parrafos);
+        font-size: 12px;
+        font-weight: bolder;
+    }
+
+    .formulario label {
+        display: block;
+        text-align: left;
+        width: 60%;
+        padding: 5px;
+        margin-bottom: 4px;
+        margin-left: 45px;
+        font-family: var(--titulos);
+        color: azure;
+        font-size: 16px;
+    }
+
+    .texto_terminos {
+        margin: 0px auto !important;
+        width: 360px !important;
+    }
+
+    .formulario input[type="submit"] {
+        padding: 0px !important;
+        margin-top: 12px;
+        margin-left: 90px;
+        background-color: var(--rojo-vibrante);
+        width: 40%;
+        height: 35px;
+        font-family: var(--titulos);
+        font-size: large !important;
+        color: azure;
+    }
+
+    .formulario input[type="submit"]:hover {
+        border: 1px solid whitesmoke;
+        box-shadow: inset 1px 1px 1px 1px ghostwhite;
+        cursor: pointer;
+    }
+
+    .back {
+        padding: 0px !important;
+        margin-top: 20px;
+        margin-left: 20px;
+        background-color: var(--rojo-vibrante);
+        width: 70px;
+        height: 26px;
+        font-family: var(--titulos);
+        font-size: medium !important;
+        color: azure;
+        opacity: 0.8;
+
+    }
 }
