@@ -12,7 +12,11 @@ body {
   justify-content: space-between;
   align-items: center;
   background-color: #282830;
-  padding: 0.2rem 2rem;
+  padding: 0.2rem 12rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
 
 .navegacion_izquierda {
@@ -26,7 +30,8 @@ body {
 .logo {
   width: 100%;
   max-width: 768px;
-  height: 100px;
+  height: 70px;  
+  margin-right: 6rem;
 }
 
 /* Menú de navegación */
@@ -57,7 +62,7 @@ body {
   background-color: #ff4d6d;
   color: white;
   border: none;
-  margin-right: 3rem;
+  margin-left: 3rem;
   padding: 1.1rem 1.5rem;
   border-radius: 20px;
   font-weight: bold;
@@ -87,7 +92,6 @@ main {
 /* Imagen del banner */
 .banner img {
   width: 100%;
-  max-width: 700px;
   height: auto;
   display: block;
   margin-top: -10rem;
@@ -124,7 +128,7 @@ main {
   background-color: #ff4d6d;
   color: white;
   border: none;
-  margin-right: 1rem;
+  margin-left: 3rem;
   padding: 1.1rem 1.5rem;
   border-radius: 20px;
   font-weight: bold;
@@ -132,17 +136,6 @@ main {
   transition: background-color 0.3s;
 }
 
-.registro {
-  background-color: #ff4d6d;
-  color: white;
-  border: none;
-  margin-right: 1rem;
-  padding: 1.1rem 1.5rem;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
 
 @media (max-width: 768px) {
   .navegacion {
@@ -196,7 +189,6 @@ main {
     transform: translate(-50%, -50%);
   }
 
-  .registro,
   .login {
     width: 80%;
     margin: 1 rem auto;

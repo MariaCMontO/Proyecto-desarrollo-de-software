@@ -32,8 +32,9 @@ export default function Login() {
             <span className={styles.reset}>Olvidaste tu contraseña?</span>
 
             <input className={styles.ingresar} type="submit" value="INGRESAR" />
-            <span className={styles.registrate}>No tienes cuenta aún? <b>Regístrate aquí</b></span>
-
+            <Link to ='/registro'>
+              <span className={styles.registrate}>No tienes cuenta aún? <b>Regístrate aquí</b></span>
+            </Link>
           </form>
         </aside>
       </section>
