@@ -38,6 +38,10 @@ export default function Landing() {
       <Link to={"/registro"}>
         <button>Registro</button>
       </Link>
+
+      <Link to={"/login"}>
+        <button>Login</button>
+      </Link>
     </div>
   );
 }
