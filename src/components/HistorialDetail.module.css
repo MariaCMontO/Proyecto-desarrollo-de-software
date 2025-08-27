@@ -1,0 +1,42 @@
+.contenedor{
+    height: fit-content;
+    background-color: var(--azul-medio);
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.contenedorRow{
+    display: flex;
+    justify-content: left;
+    gap: 5px;
+}
+
+.contenedorProductos{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.parrafos{
+    font-family: var(--parrafos);
+    font-size: 14px;
+}
+
+.contenedorTotal{
+    display: flex;
+    justify-content: space-between;
+}
+.parrafosRojos{
+    font-family: var(--parrafos);
+    color: var(--rojo-vibrante);
+    font-size: 14px;
+}
+
+.contenedorFinal{
+    border: 1px solid rgba(255, 255, 255, 0.537);
+    border-radius: 10px;
+    padding: 5px;
+}

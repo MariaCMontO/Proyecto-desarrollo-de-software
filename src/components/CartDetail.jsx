@@ -2,7 +2,7 @@ import { useCarritoContext } from "../context/carritoContext";
 import { useHelpers } from "../hooks/useHelpers";
 import styles from "./CartDetail.module.css";
 
-export default function CartDetail({ producto, setNotaModal, notaModal }) {
+export default function CartDetail({ producto, setNotaModal, historial }) {
   const { formatoCOP } = useHelpers();
   const { dispatch } = useCarritoContext();
 
@@ -18,19 +18,19 @@ export default function CartDetail({ producto, setNotaModal, notaModal }) {
             onClick={() =>
               dispatch({ type: "Eliminar producto", payload: { producto } })
             }
-            className={styles.closeBoton}
+            className={`${styles.closeBoton} ${historial&& styles.hidden}`}
           >
             <img className={styles.closeImagen} src="/close_icon.png" alt="" />
           </button>
         </div>
         <p className={styles.precio}>{formatoCOP.format(producto.precio)}</p>
         <div className={styles.contenedorRow}>
-          <div className={styles.modificarBoton}>
+          <div className={`${styles.modificarBoton} ${historial&& styles.centrado}`}>
             <button
               onClick={() =>
                 dispatch({ type: "Disminuir cantidad", payload: { producto } })
               }
-              className={styles.botones}
+              className={`${styles.botones} ${historial&& styles.hidden}`}
             >
               -
             </button>
@@ -39,7 +39,7 @@ export default function CartDetail({ producto, setNotaModal, notaModal }) {
               onClick={() =>
                 dispatch({ type: "Añadir cantidad", payload: { producto } })
               }
-              className={styles.botones}
+              className={`${styles.botones} ${historial&& styles.hidden}`}
             >
               +
             </button>
@@ -53,13 +53,13 @@ export default function CartDetail({ producto, setNotaModal, notaModal }) {
           {producto.nota != "" ? (
             <div className={styles.contenedorNota}>
               <p className={styles.nota}>{producto.nota}</p>
-              <button className={styles.editarBoton} onClick={() => setNotaModal(producto)}>
+              <button className={`${styles.editarBoton} ${historial&& styles.hidden}`} onClick={() => setNotaModal(producto)}>
                 <img className={styles.editarImagen} src="/editar_icon.png" alt="" />
               </button>
             </div>
           ) : (
             <button
-              className={styles.agregarBoton}
+              className={`${styles.agregarBoton} ${historial&& styles.hidden}`}
               onClick={() => setNotaModal(producto)}
             >
               Agregar nota

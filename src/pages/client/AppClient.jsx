@@ -9,13 +9,14 @@ import { useCarritoContext } from "../../context/carritoContext";
 import { useEffect, useState } from "react";
 import ProductModal from "./ProductModal";
 import NotaModal from "./NotaModal";
+import { useHistorialContext } from "../../context/historialContext";
 
 export default function AppClient() {
   const nav = [
-    { nombre: "Menu", imagen: "/menu_icon.svg" },
-    { nombre: "Historial", imagen: "/historial_icon.svg" },
-    { nombre: "Perfil", imagen: "/perfil_icon.svg" },
-    { nombre: "IA", imagen: "/ia_icon.png" },
+    { nombre: "Menu", imagen: "/menu_icon.svg", link: "/cliente" },
+    { nombre: "Historial", imagen: "/historial_icon.svg", link: "/historial" },
+    { nombre: "Perfil", imagen: "/perfil_icon.svg", link: "/perfil" },
+    { nombre: "IA", imagen: "/ia_icon.png", link: "/cliente" },
   ];
 
   const icons = [
@@ -24,12 +25,17 @@ export default function AppClient() {
     { nombre: "Pizzas", imagen: "/icon_pizza.svg" },
   ];
 
-  const { state, dispatch } = useCarritoContext();
+  const { state: stateCarrito, dispatch } = useCarritoContext();
+  const { state: stateHistorial } = useHistorialContext();
   const [category, setCategory] = useState();
   const [showNav, setShowNav] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [modal, setModal] = useState(null);
   const [notaModal, setNotaModal] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem("carrito", JSON.stringify(stateCarrito.carrito));
+  }, [stateCarrito.carrito]);
 
   return (
     <main className={styles.contenedor}>
@@ -111,8 +117,13 @@ export default function AppClient() {
             </button>
           </div>
           <div className={styles.carrito}>
-            {state.carrito.map((producto) => (
-              <CartDetail key={producto.id} producto={producto} setNotaModal={setNotaModal} notaModal={notaModal} />
+            {stateCarrito.carrito.map((producto) => (
+              <CartDetail
+                key={producto.id}
+                producto={producto}
+                setNotaModal={setNotaModal}
+                notaModal={notaModal}
+              />
             ))}
           </div>
           <div className={styles.resumen}>
@@ -121,7 +132,9 @@ export default function AppClient() {
         </div>
       </div>
       {modal && <ProductModal producto={modal} setModal={setModal} />}
-      {notaModal && <NotaModal setNotaModal={setNotaModal} notaModal={notaModal}/>}
+      {notaModal && (
+        <NotaModal setNotaModal={setNotaModal} notaModal={notaModal} />
+      )}
     </main>
   );
 }
