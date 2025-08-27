@@ -33,7 +33,7 @@ body {
     border: 2px solid gray;
 }
 
-#vanished {
+.vanished {
     position: relative;
     position: fixed;
     margin-top: -40px;
@@ -48,13 +48,13 @@ body {
     margin-left: 20px;
 }
 
-#logo {
+.logo {
     display: block;
     width: 400px;
     margin: 0px auto;
 }
 
-#hamburguesa2 {
+.hamburguesa2 {
     display: block;
     width: 500px;
     margin: 0px auto;
@@ -114,7 +114,7 @@ body {
     font-size: 20px;
 }
 
-#reset {
+.reset {
     float: right;
     margin-top: 10px;
     font-family: var(--parrafos);
@@ -124,12 +124,12 @@ body {
     font-size: 14px;
 }
 
-#reset:hover {
+.reset:hover {
     color: var(--rojo-vibrante);
     text-decoration: underline;
 }
 
-#ingresar {
+.ingresar {
     padding: 0px !important;
     margin-top: 80px;
     background-color: var(--rojo-vibrante);
@@ -140,12 +140,12 @@ body {
     color: azure;
 }
 
-#ingresar:hover {
+.ingresar:hover {
     border: 1px solid whitesmoke;
     box-shadow: inset 1px 1px 1px 1px ghostwhite
 }
 
-#registrate {
+.registrate {
     display: block;
     margin: 0px auto;
     text-align: center;
@@ -157,7 +157,7 @@ body {
     padding-right: 4px;
 }
 
-#registrate:hover {
+.registrate:hover {
     color: var(--rojo-vibrante);
     text-decoration: underline;
 }

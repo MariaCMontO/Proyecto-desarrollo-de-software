@@ -19,51 +19,57 @@ body {
     clear: both;
 }
 
-.login {
+.contenedor {
+    width: 1440px;
+}
+
+.registro {
     display: flex;
     justify-content: center;
-    margin: 40px auto;
-    width: 1100px;
-    height: 900px;
+    margin: 20px auto;
+    width: 80%;
+    height: 600px;
+    margin-top: 10px;
 }
 
 .vanished {
     position: absolute;
-    margin-top: -640px;
-    margin-left: 160px;
-    width: 1580px;
+    left: 240px;
+    top: 30px;
     opacity: 0.6;
     z-index: -1;
+    width: 65%;
+    object-fit: cover;
+    object-position: 50% 50%;
 }
 
 .formulario {
-    width: 500px;
-    height: 720px;
-    padding: 20px;
-    margin-top: 20px;
+    width: 36%;
+    height: 100%;
     background-color: var(--azul-medio);
     border-radius: 90px;
     opacity: 0.9;
+    margin-top: -20px;
 }
 
 .formulario h2 {
     display: block;
     color: ghostwhite;
     text-align: center;
-    margin: 20px;
-    padding: 10px;
+    padding: 4px;
     font-family: var(--titulos);
     font-size: 50px;
-    margin-top: 10px;
     font-weight: bolder;
 }
 
-.formulario input {
+.formulario input[type="text"],
+input[type="password"] {
     display: block;
     width: 80%;
-    height: 30px;
+    height: 35px;
     padding: 5px;
     margin-bottom: 10px;
+    margin-left: 10%;
     border-radius: 90px;
     background-color: whitesmoke;
     padding-inline-start: 30px;
@@ -72,7 +78,8 @@ body {
     font-weight: bolder;
 }
 
-.formulario input::placeholder {
+.formulario input[type="text"],
+input[type="password"]::placeholder {
     color: black;
     font-size: 16px;
 }
@@ -83,40 +90,329 @@ body {
     width: 75%;
     padding: 5px;
     margin-bottom: 5px;
+    margin-left: 12%;
     font-family: var(--titulos);
     color: azure;
     font-size: 20px;
 }
 
-.terminos {
+.contenedor_terminos {
+    display: flex;
+}
+
+.check_terminos {
     display: block;
     float: left;
     width: 20px;
     margin: 0px auto;
-    margin-left: 50px;
+    margin-left: 15%;
     margin-top: 2px;
     background-color: var(--azul-oscuro-fondo);
     border-radius: 50%;
 }
 
-.term_cond {
+.texto_terminos {
     margin: 0px auto !important;
-    width: 220px !important;
-    margin-right: 480px !important;
+    width: 420px !important;
 }
 
-.registrarse {
+.formulario input[type="submit"] {
     padding: 0px !important;
-    margin-top: 25px;
+    margin-top: 12px;
+    margin-left: 19%;
     background-color: var(--rojo-vibrante);
-    width: 76%;
-    height: 55px;
+    width: 60%;
+    height: 40px;
     font-family: var(--titulos);
     font-size: x-large !important;
     color: azure;
 }
 
-.registrarse:hover {
+.formulario input[type="submit"]:hover {
     border: 1px solid whitesmoke;
-    box-shadow: inset 1px 1px 1px 1px ghostwhite
+    box-shadow: inset 1px 1px 1px 1px ghostwhite;
+    cursor: pointer;
 }
+
+.back {
+    display: flexbox;
+    padding: 0px !important;
+    margin-top: 20px;
+    margin-left: 20px;
+    background-color: var(--rojo-vibrante);
+    width: 80px;
+    height: 30px;
+    font-family: var(--titulos);
+    font-size: medium !important;
+    color: azure;
+    opacity: 0.8;
+
+}
+
+.back:hover {
+    border: 1px solid whitesmoke;
+    box-shadow: inset 1px 1px 1px 1px ghostwhite;
+    cursor: pointer;
+}
+
+@media (max-width: 770px) {
+
+    .clearfix {
+        float: none;
+        clear: both;
+    }
+
+    .contenedor {
+        display: block;
+        float: inherit;
+        width: 400px;
+        height: 540px;
+    }
+
+    .registro {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        margin-top: 40px;
+    }
+
+    .vanished {
+        position: absolute;
+        left: 15px;
+        top: 10%;
+        z-index: -1;
+        width: 100%;
+        object-fit: cover;
+        object-position: 50% 50%;
+    }
+
+    .formulario {
+        width: 80%;
+        height: 100%;
+        background-color: var(--azul-medio);
+        border-radius: 90px;
+        opacity: 0.9;
+        margin-left: 2%;
+    }
+
+    .formulario h2 {
+        display: block;
+        color: ghostwhite;
+        text-align: center;
+        padding: 4px;
+        font-family: var(--titulos);
+        font-size: 30px;
+        font-weight: bolder;
+        margin-top: 10px;
+    }
+
+    .formulario input[type="text"],
+    input[type="password"] {
+        display: block;
+        width: 80%;
+        height: 30px;
+        padding: 5px;
+        margin-bottom: 10px;
+        margin-left: 10%;
+        border-radius: 90px;
+        background-color: whitesmoke;
+        padding-inline-start: 30px;
+        font-family: var(--parrafos);
+        font-size: 16px;
+        font-weight: bolder;
+    }
+
+    .formulario input[type="text"],
+    input[type="password"]::placeholder {
+        color: black;
+        font-size: 12px;
+    }
+
+    .formulario label {
+        display: block;
+        text-align: left;
+        width: 75%;
+        padding: 5px;
+        margin-bottom: 5px;
+        margin-left: 12%;
+        font-family: var(--titulos);
+        color: azure;
+        font-size: 16px;
+    }
+
+    .contenedor_terminos {
+        display: flex;
+    }
+
+    .check_terminos {
+        display: block;
+        float: left;
+        width: 20px;
+        margin: 0px auto;
+        margin-left: 20%;
+        margin-top: 8px;
+        background-color: var(--azul-oscuro-fondo);
+        border-radius: 50%;
+    }
+
+    .texto_terminos {
+        width: 420px !important;
+        margin-left: -4px !important;
+    }
+
+    .formulario input[type="submit"] {
+        padding: 0px !important;
+        margin-top: 12px;
+        margin-left: 22%;
+        background-color: var(--rojo-vibrante);
+        width: 55%;
+        height: 30px;
+        font-family: var(--titulos);
+        font-size: large !important;
+        color: azure;
+    }
+
+    .formulario input[type="submit"]:hover {
+        border: 1px solid whitesmoke;
+        box-shadow: inset 1px 1px 1px 1px ghostwhite;
+        cursor: pointer;
+    }
+
+    .back {
+        display: flexbox;
+        padding: 0px !important;
+        margin-top: 20px;
+        margin-left: 20px;
+        background-color: var(--rojo-vibrante);
+        width: 80px;
+        height: 30px;
+        font-family: var(--titulos);
+        font-size: medium !important;
+        color: azure;
+        opacity: 0.8;
+
+    }
+
+    .back:hover {
+        border: 1px solid whitesmoke;
+        box-shadow: inset 1px 1px 1px 1px ghostwhite;
+        cursor: pointer;
+    }
+}
+
+/*
+@media (max-width: 768px) {
+
+    .registro {
+        margin-top: 2%;
+        margin-left: 15%;
+        width: 60%;
+    }
+
+    .vanished {
+        position: absolute;
+        left: 32% !important;
+        opacity: 0.6;
+        z-index: -1;
+        width: 122% !important;
+        object-fit: cover;
+        object-position: 50% 50%;
+        top: 18%;
+    }
+
+    .formulario {
+        width: 80%;
+        height: 580px !important;
+        background-color: var(--azul-medio);
+        background-color: var(--azul-medio);
+        border-radius: 90px;
+        opacity: 0.9;
+        margin-left: 140px;
+    }
+
+    .formulario h2 {
+        display: block;
+        color: ghostwhite;
+        text-align: center;
+        margin: 0px auto;
+        padding-top: 10px;
+        font-family: var(--titulos);
+        font-size: 40px;
+        font-weight: bolder;
+    }
+
+    .formulario input[type="text"],
+    input[type="password"] {
+        display: block;
+        width: 75%;
+        height: 35px;
+        padding: 5px;
+        margin-bottom: 8px;
+        margin-left: 12%;
+        border-radius: 90px;
+        background-color: whitesmoke;
+        padding-inline-start: 30px;
+        font-family: var(--parrafos);
+        font-size: 14px;
+        font-weight: bolder;
+    }
+
+    .formulario input[type="text"],
+    input[type="password"]::placeholder {
+        color: black;
+        font-size: 14px;
+    }
+
+    .formulario label {
+        display: block;
+        text-align: left;
+        width: 75%;
+        padding: 4px;
+        margin-bottom: 5px;
+        margin-left: 14%;
+        font-family: var(--titulos);
+        color: azure;
+        font-size: 18px;
+    }
+
+    .contenedor_terminos {
+        display: flex;
+        margin-top: 4%;
+    }
+
+    .check_terminos {
+        margin-left: 20%;
+    }
+
+    .texto_terminos {
+        margin-left: -10% !important;
+    }
+
+    .formulario input[type="submit"] {
+        padding: 0px !important;
+        margin-top: 10px;
+        margin-left: 31%;
+        background-color: var(--rojo-vibrante);
+        width: 38%;
+        height: 32px;
+        font-family: var(--titulos);
+        font-size: large !important;
+        color: azure;
+    }
+
+    .back {
+        padding: 0px !important;
+        margin-top: 20px;
+        margin-left: 20px;
+        background-color: var(--rojo-vibrante);
+        width: 80px;
+        height: 30px;
+        font-family: var(--titulos);
+        font-size: medium !important;
+        color: azure;
+        opacity: 0.8;
+
+    }
+}
+*/
