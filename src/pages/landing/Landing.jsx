@@ -36,6 +36,10 @@ export default function Landing() {
         <button>Registro</button>
       </Link>
 
+      <Link to={"/login"}>
+        <button>Login</button>
+      </Link>
+
     </div>
   );
 }
