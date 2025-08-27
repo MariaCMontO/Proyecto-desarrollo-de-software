@@ -3,7 +3,7 @@ import styles from './Registro.module.css'
 
 export default function Registration() {
     return (
-        <>
+        <div className={styles.contenedor} >
             <img className={styles.vanished} src="../../public/fondo_registro_recortada.png" alt="Fondo" />
 
             <Link to="/">
@@ -38,6 +38,6 @@ export default function Registration() {
                     </form>
                 </div>
             </section>
-        </>
+        </div>
     )
 }
