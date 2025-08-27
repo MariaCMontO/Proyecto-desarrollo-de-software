@@ -20,6 +20,16 @@ export default function Landing() {
               Realizar Pedido
             </button>
           </Link>
+          <Link to={"/registro"}>
+            <button className={styles.registro}>
+              Registro
+            </button>
+          </Link>
+          <Link to={"/login"}>
+            <button className={styles.login}>
+              Login
+            </button>
+          </Link>
         </nav>
       </header>
       <main>
@@ -32,13 +42,8 @@ export default function Landing() {
         </div>
       </main>
 
-      <Link to={"/registro"}>
-        <button>Registro</button>
-      </Link>
 
-      <Link to={"/login"}>
-        <button>Login</button>
-      </Link>
+
 
     </div>
   );
