@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./styles_registro.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="icon" href="../public/Logo.png" type="image/png">
+    <link rel="icon" href="../public/Logo.png" type="image/png" />
     <link
         href="https://fonts.googleapis.com/css2?family=Bangers&family=Caveat:wght@400..700&family=Nixie+One&family=PT+Sans+Narrow:wght@400;700&display=swap"
         rel="stylesheet" />
@@ -16,9 +16,8 @@
 
 <body>
     <main>
-
         <div>
-            <img id="vanished" src="../../public/fondo_registro.png" alt="Fondo" />
+            <img class="vanished" src="../../public/fondo_registro.png" alt="Fondo" />
         </div>
 
         <section class="login">
@@ -26,25 +25,24 @@
                 <h2>Registrate</h2>
                 <form>
                     <label for="nombre">Nombre: </label>
-                    <input id="nombre" type="text" placeholder="Nombres Apellidos">
+                    <input class="nombre" type="text" placeholder="Nombres Apellidos" />
 
                     <label for="email">Email: </label>
-                    <input id="email" type="text" placeholder="correo@gmail.com">
+                    <input class="email" type="text" placeholder="correo@gmail.com" />
 
                     <label for="contraseña">Contraseña: </label>
-                    <input id="contraseña" type="password" placeholder="***********">
+                    <input class="contraseña" type="password" placeholder="***********" />
 
                     <label for="celular">Celular: </label>
-                    <input id="celular" type="text" placeholder="123 456 7890">
+                    <input class="celular" type="text" placeholder="123 456 7890" />
 
                     <label for="direccion">Direccion: </label>
-                    <input id="direccion" type="text" placeholder="##########">
+                    <input class="direccion" type="text" placeholder="##########" />
 
-                    <input type="checkbox" name="acepto" value="acepto" id="terminos">
-                    <label id="term_cond" for="checkbox">Aceptar términos y condiciones.</label>
+                    <input class="terminos" type="checkbox" name="acepto" value="acepto" />
+                    <label class="term_cond" for="checkbox">Aceptar términos y condiciones.</label>
 
-                    <input id="registrarse" type="submit" value="REGISTRARSE">
-
+                    <input class="registrarse" type="submit" value="REGISTRARSE" />
                 </form>
             </div>
         </section>

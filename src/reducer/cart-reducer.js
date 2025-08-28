@@ -1,9 +1,12 @@
 //Creamos el carrito inicial con local storage
-const carritoInicial = [];
+const carritoInicial = () => {
+  const localStorageCart=localStorage.getItem('carrito')
+    return localStorageCart ? JSON.parse(localStorageCart) : []
+};
 
 //State inicial
 export const stateInicial = {
-  carrito: carritoInicial,
+  carrito: carritoInicial(),
 };
 
 //Creamos el reducer
@@ -75,7 +78,7 @@ export const carritoReducer = (state = stateInicial, action) => {
     if (producto.cantidad === 1) {
         console.log("La cantidad es 0");
         nuevoCarrito = state.carrito.filter(
-            (producto) => producto != action.payload.producto
+            (producto) => producto.id != action.payload.producto.id
         );
         return {
             ...state,

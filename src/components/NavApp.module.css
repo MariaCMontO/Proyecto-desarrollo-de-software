@@ -19,6 +19,7 @@
 
 .contenedor:hover{
     background-color: var(--rojo-vibrante);
+    
 }
 
 .contenedor .active{
@@ -34,4 +35,6 @@
     color: white;
     font-size: 18px;
     font-family: var(--titulos);
+    text-decoration: none;
+    text-decoration-line: none;
 }

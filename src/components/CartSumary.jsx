@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useCarritoContext } from "../context/carritoContext";
 import { useHelpers } from "../hooks/useHelpers";
 import styles from "./CartSumary.module.css";
@@ -5,10 +6,10 @@ import styles from "./CartSumary.module.css";
 export default function CartSumary() {
 
   const {formatoCOP}=useHelpers()
-  const { state } = useCarritoContext();
-  const total = state.carrito.reduce((total, producto) => {
+  const { state: stateCarrito} = useCarritoContext();
+  const total = stateCarrito.carrito.reduce((total, producto) => {
     return total + producto.precio * producto.cantidad;
-  }, 0);
+  }, 0)
 
   return (
     <div className={styles.contenedor}>
@@ -25,7 +26,9 @@ export default function CartSumary() {
         <p className={styles.textoRojo}>Total:</p>
         <p className={styles.textoRojo}>{formatoCOP.format(total * 1.1)}</p>
       </div>
+      <Link to="/pago">
       <button className={styles.boton}>PAGAR</button>
+      </Link>
     </div>
   );
 }

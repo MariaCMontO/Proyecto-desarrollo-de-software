@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import styles from './Landing.module.css';
+import styles from "./Landing.module.css";
 
 export default function Landing() {
-
   return (
     <div>
       <header>
@@ -16,12 +15,20 @@ export default function Landing() {
               <p>Contacto</p>
             </div>
           </div>
-          <button className={styles.navegacion_boton_realizar_pedido}>
-            Realizar Pedido
-          </button>
+          <Link to="/cliente">
+            <button className={styles.navegacion_boton_realizar_pedido}>
+              Realizar Pedido
+            </button>
+          </Link>
+          <Link to={"/login"}>
+            <button className={styles.login}>
+              Login
+            </button>
+          </Link>
         </nav>
       </header>
       <main>
+
         <div className={styles.banner}>
           <img src="/fondo_registro.png" alt="Imagen hamburguesa" />
           <div className={styles.banner_texto}>
@@ -29,15 +36,8 @@ export default function Landing() {
             <p>A LA NO TE PODRÁS RESISTIR</p>
           </div>
         </div>
+
       </main>
-
-      <Link to="/cliente">
-        <button>Realizar pedido</button>
-      </Link>
-
-      <Link to={"/registro"}>
-        <button>Registro</button>
-      </Link>
     </div>
   );
 }

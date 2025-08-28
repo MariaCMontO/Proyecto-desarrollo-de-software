@@ -1,4 +1,3 @@
-
 /* Tipografías personalizadas */
 body {
   margin: 0;
@@ -13,20 +12,26 @@ body {
   justify-content: space-between;
   align-items: center;
   background-color: #282830;
-  padding: 0.2rem 2rem;
+  padding: 0.2rem 12rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
 
 .navegacion_izquierda {
   display: flex;
   align-items: center;
-  gap: 15rem;
+  gap: 1rem;
   font-family: 'Popins', sans-serif;
-  margin-left: 10rem;
   font-size: 1rem;
 }
 
 .logo {
-  height: 150px;
+  width: 100%;
+  max-width: 768px;
+  height: 70px;  
+  margin-right: 6rem;
 }
 
 /* Menú de navegación */
@@ -49,7 +54,7 @@ body {
 
 .navegacion_menu p:hover {
   color: #ff4d6d;
-text-decoration: underline; 
+  text-decoration: underline;
 }
 
 /* Botón de pedido */
@@ -57,15 +62,16 @@ text-decoration: underline;
   background-color: #ff4d6d;
   color: white;
   border: none;
-  margin-right: 5rem;
+  margin-left: 3rem;
   padding: 1.1rem 1.5rem;
   border-radius: 20px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 80%;
 }
 
-.navegacion_boton-realizar-pedido:hover {
+.navegacion_boton_realizar_pedido:hover {
   background-color: #ff1f4b;
 }
 
@@ -116,4 +122,77 @@ main {
   font-weight: bold;
   margin: 0.5rem 0 0;
   color: #ffffff;
+}
+
+.login {
+  background-color: #ff4d6d;
+  color: white;
+  border: none;
+  margin-left: 3rem;
+  padding: 1.1rem 1.5rem;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+
+@media (max-width: 768px) {
+  .navegacion {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .navegacion_izquierda {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .navegacion_menu {
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .logo {
+    height: 80px;
+    max-width: 300px;
+  }
+
+  .banner_texto p:first-of-type,
+  .banner_texto p:last-of-type {
+    font-size: 2rem;
+  }
+
+  .navegacion_boton_realizar_pedido {
+    margin: 1rem auto;
+    width: 80%;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+  }
+
+  .banner {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .banner img {
+    margin-top: -5rem;
+  }
+
+  .banner_texto {
+    width: 100%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .login {
+    width: 80%;
+    margin: 1 rem auto;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+  }
 }
