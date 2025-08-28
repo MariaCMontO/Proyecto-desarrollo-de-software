@@ -4,7 +4,7 @@ import styles from './Registro.module.css'
 export default function Registration() {
     return (
         <div className={styles.contenedor} >
-            <img className={styles.vanished} src="../../public/fondo_registro_recortada.png" alt="Fondo" />
+            <img className={styles.vanished} src="/fondo_registro_recortada.png" alt="Fondo" />
 
             <Link to="/">
                 <button className={styles.back}>Regresar</button>

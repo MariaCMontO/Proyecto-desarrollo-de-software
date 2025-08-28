@@ -11,13 +11,13 @@ export default function Login() {
       </Link>
 
       <div>
-        <img className={styles.vanished} src="../../public/fondo_login.png" alt="Fondo" />
+        <img className={styles.vanished} src="/fondo_login.png" alt="Fondo" />
       </div>
 
       <section className={styles.login}>
         <div className={styles.imagenes}>
-          <img className={styles.logo} src="../../public/Logo.png" alt="Logo" />
-          <img className={styles.hamburguesa2} src="../../public/fondo_login.png" alt="Fondo2" />
+          <img className={styles.logo} src="/Logo.png" alt="Logo" />
+          <img className={styles.hamburguesa2} src="/fondo_login.png" alt="Fondo2" />
         </div>
 
         <aside className={styles.formulario}>
