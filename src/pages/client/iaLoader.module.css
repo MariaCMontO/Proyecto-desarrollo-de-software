@@ -28,7 +28,7 @@
 
 .imagen{
     width:400px;
-    height: 400px;
+    height:400px;
 }
 .spinner{
   position: relative;
@@ -60,9 +60,10 @@
     padding-inline: 30px;
     border-radius: 15px;
   }
+  .spinner,
   .imagen {
-    width: 250px;
-    top: -30px;
+    width:200px;
+    height:200px;
   }
 
 }

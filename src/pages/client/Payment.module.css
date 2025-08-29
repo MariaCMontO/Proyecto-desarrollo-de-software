@@ -49,64 +49,49 @@
 }
 
 .texto {
+  width: 300px;
+  text-align: left;
   font-size: 16px;
   color: white;
-  margin: 5px 0;
   font-family: var(--parrafos);
 }
 
-.cuartoCuadro,
-.quintoCuadro {
+.cuartoCuadro {
   width: 100%;
   display: flex;
   align-items: center; /* Alinea verticalmente */
+  justify-content: space-between;
+  border: #cccccc5d solid 2px;
+  padding-inline: 30px;
+  padding-block: 10px;
+  border-radius: 12px;
+  gap: 20px;
+}
+.quintoCuadro {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Alinea verticalmente */
   gap: 16px; /* Espacio entre elementos */
-  flex-wrap: wrap; /* Opcional: permite que se acomoden si no hay espacio */
   border: #cccccc5d solid 2px;
   padding-inline: 30px;
   padding-block: 10px;
   border-radius: 12px;
 }
-.inputUno {
-  width: 60%;
+.contenedor{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.input{
+  width: 100%;
   padding: 7px;
   margin-top: 5px;
-  margin-left: 80px;
   border: 1px solid #ccc;
   border-radius: 78px;
-  background-color: white;
-  color: black;
-  font-family: var(--parrafos)
-}
-.inputDos {
-  width: 60%;
-  padding: 7px;
-  margin-top: 5px;
-  margin-left: 65px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  background-color: white;
-  color: black;
-  font-family: var(--parrafos)
-}
-.inputTres {
-  width: 60%;
-  padding: 7px;
-  margin-top: 5px;
-  margin-left: 50px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  background-color: white;
-  color: black;
-  font-family: var(--parrafos)
-}
-.inputCuatro {
-  width: 60%;
-  padding: 7px;
-  margin-top: 5px;
-  margin-left: 180px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
   background-color: white;
   color: black;
   font-family: var(--parrafos)
@@ -127,4 +112,15 @@
 
 .boton:hover {
   background-color: #fc4444;
+}
+
+@media (max-width: 768px) {
+  .texto{
+    font-size: 14px;
+    width: 150px;
+  }
+  .quintoCuadro,
+  .cuartoCuadro{
+    padding-inline:15px ;
+  }
 }

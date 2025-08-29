@@ -26,7 +26,7 @@ export default function CartSumary({ recibo }) {
         <p className={styles.textoRojo}>{formatoCOP.format(total * 1.1)}</p>
       </div>
       {!recibo && (
-        <Link to="/pago" state={{ia:false}}>
+        <Link to={stateCarrito.carrito.length>=1? "/pago":""} state={{ia:false}}>
           <button className={styles.boton}>PAGAR</button>
         </Link>
       )}

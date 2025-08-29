@@ -15,11 +15,11 @@ export default function IaPortal() {
               <div className={Styles.cuadroPreguntas}>
                 <div className={Styles.contenedorPregunta1}>
                   <p className={Styles.pregunta}>Cuantas personas comeran hoy ?</p>
-                  <input className={Styles.inputUno} type="number" />
+                  <input className={Styles.input} type="number" />
                 </div>
                 <div className={Styles.contenedorPregunta2}>
                   <p className={Styles.pregunta}>Notas adicionales para tu pedido:</p>
-                  <input className={Styles.inputDos} type="text" />
+                  <textarea className={Styles.textArea} type="text"></textarea>
                 </div>
               </div>
               {/* Segundo cuadrito donde esta el mensaje de rojo */}

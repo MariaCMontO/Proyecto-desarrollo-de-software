@@ -17,12 +17,15 @@ export default function Payment() {
   const { ia } = location.state;
 
   const submit = () => {
-    historialDispatch({
-      type: "Agregar al historial",
-      payload: { productos, cliente: "Juan" },
-    });
-    carritoDispatch({ type: "Vaciar carrito" });
+    if (stateCarrito.carrito.length >= 1) {
+      historialDispatch({
+        type: "Agregar al historial",
+        payload: { productos, cliente: "Juan" },
+      });
+      carritoDispatch({ type: "Vaciar carrito" });
+    }
   };
+
   return (
     <div className={Styles.cuadroPrincipal}>
       <div className={Styles.cuadroSecundario}>
@@ -52,7 +55,7 @@ export default function Payment() {
             Metodo de pago
           </label>
           <input
-            className={Styles.inputUno}
+            className={Styles.input}
             type="text"
             id="metodo"
             name="metodo"
@@ -60,15 +63,24 @@ export default function Payment() {
         </div>
         {/* Quinto cuadro donde estan los datos de la tarjeta */}
         <div className={Styles.quintoCuadro}>
-          <p className={Styles.texto}>Numero de tarjeta:</p>
-          <input className={Styles.inputDos} type="number" />
-          <p className={Styles.texto}>Nombre de la tarjeta:</p>
-          <input className={Styles.inputTres} type="text" />
-          <p className={Styles.texto}>CVV:</p>
-          <input className={Styles.inputCuatro} type="text" />
+          <div className={Styles.contenedor}>
+            <p className={Styles.texto}>Numero de tarjeta:</p>
+            <input className={Styles.input} type="number" />
+          </div>
+          <div className={Styles.contenedor}>
+            <p className={Styles.texto}>Nombre de la tarjeta:</p>
+            <input className={Styles.input} type="text" />
+          </div>
+          <div className={Styles.contenedor}>
+            <p className={Styles.texto}>CVV:</p>
+            <input className={Styles.input} type="text" />
+          </div>
         </div>
         {/* Boton para confirmar la compra */}
-        <Link to="/cliente" className={Styles.boton}>
+        <Link
+          to={stateCarrito.carrito.length >= 1 ? "/cliente" : ""}
+          className={Styles.boton}
+        >
           <button className={Styles.boton} onClick={submit}>
             FINALIZAR COMPRA
           </button>
