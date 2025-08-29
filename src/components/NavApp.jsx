@@ -1,20 +1,36 @@
-import { Link } from 'react-router-dom';
-import styles from './NavApp.module.css'
+import { NavLink } from "react-router-dom";
+import styles from "./NavApp.module.css";
 
-export default function NavApp({elementos}) {
+export default function NavApp({ elementos, custom }) {
   return (
     <>
-    <div className={styles.contenedorPrincipal}>
-    {elementos.map((elemento) => (
-      <Link to={elemento.link} key={elemento.imagen}>
-        <div className={styles.contenedor}>
-            <img className={styles.imagen} src={elemento.imagen} alt="" />
-            <h1 className={styles.texto}>{elemento.nombre}</h1>
-        </div>
-        </Link>
-    )
-    )}
-    </div>
+      <div className={styles.contenedorPrincipal}>
+        {elementos.map((elemento) =>
+          elemento.custom ? (
+            <button
+              key={elemento.nombre}
+              onClick={elemento.custom}
+              className={styles.contenedor}
+            >
+              <img className={styles.imagen} src={elemento.imagen} alt="" />
+              <p className={styles.texto}>{elemento.nombre}</p>
+            </button>
+          ) : (
+            <NavLink
+              to={elemento.link}
+              key={elemento.nombre}
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.contenedor} ${styles.active}`
+                  : `${styles.contenedor}`
+              }
+            >
+              <img className={styles.imagen} src={elemento.imagen} alt="" />
+              <p className={styles.texto}>{elemento.nombre}</p>
+            </NavLink>
+          )
+        )}
+      </div>
     </>
   );
 }

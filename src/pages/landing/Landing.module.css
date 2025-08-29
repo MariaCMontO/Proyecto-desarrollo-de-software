@@ -12,10 +12,11 @@ body {
   justify-content: space-between;
   align-items: center;
   background-color: #282830;
-  padding: 0.2rem 12rem;
+  padding: 1rem 6rem;
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   z-index: 10;
 }
 
@@ -30,7 +31,7 @@ body {
 .logo {
   width: 100%;
   max-width: 768px;
-  height: 70px;  
+  height: 70px;
   margin-right: 6rem;
 }
 
@@ -62,13 +63,12 @@ body {
   background-color: #ff4d6d;
   color: white;
   border: none;
-  margin-left: 3rem;
-  padding: 1.1rem 1.5rem;
+  padding: 1rem 2rem;
   border-radius: 20px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s;
-  width: 80%;
+  margin-left: 2rem;
 }
 
 .navegacion_boton_realizar_pedido:hover {
@@ -86,21 +86,19 @@ main {
   position: relative;
   width: 100%;
   max-width: 700px;
-  margin: 0 auto;
+  margin: 0rem auto;
 }
 
 /* Imagen del banner */
 .banner img {
   width: 100%;
   height: auto;
-  display: block;
-  margin-top: -10rem;
 }
 
 /* Texto superpuesto */
 .banner_texto {
   position: absolute;
-  top: 60%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -135,6 +133,19 @@ main {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
+
+
+.seccionNosotros_imagen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  
+}
+
+
+
 
 
 @media (max-width: 768px) {
@@ -195,4 +206,6 @@ main {
     padding: 0.8rem 1rem;
     font-size: 1rem;
   }
+
+
 }

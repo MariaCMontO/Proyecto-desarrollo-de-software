@@ -20,11 +20,6 @@ export default function Landing() {
               Realizar Pedido
             </button>
           </Link>
-          <Link to={"/login"}>
-            <button className={styles.login}>
-              Login
-            </button>
-          </Link>
         </nav>
       </header>
       <main>
@@ -35,9 +30,29 @@ export default function Landing() {
             <p>DESARROLLAMOS LA FÓRMULA</p>
             <p>A LA NO TE PODRÁS RESISTIR</p>
           </div>
+
+          <section className={styles.seccionNosotros}>
+            <div className={styles.seccionNosotros_texto}>
+              <p>En FoodLab creemos que la buena comida no solo se cocina… ¡se formula! Somos un restaurante
+                de comida rápida donde cada bocado es el resultado de una receta precisa: sabor, calidad y rapidez
+                en la medida perfecta.</p>
+
+              <p>Inspirados en la creatividad de un laboratorio, combinamos ingredientes frescos,
+                técnicas innovadoras y un toque de locura culinaria para sorprenderte en cada visita.
+                Nuestro objetivo es simple: que disfrutes de tu comida favorita con la fórmula que siempre funciona — rápida,
+                deliciosa y con un estilo único.</p>
+
+            </div>
+            <div className={styles.seccionNosotros_imagen}>
+            <img src="/fondo_nosotros.jpg" alt="Fondo nosotros" />
+            </div>
+          </section >
+
+
+
         </div>
 
-      </main>
-    </div>
+      </main >
+    </div >
   );
 }
