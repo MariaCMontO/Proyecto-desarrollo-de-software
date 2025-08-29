@@ -38,22 +38,22 @@ export default function Ordenes() {
           <p className={Styles.texto}>
             Metodo de pago:
           </p>
-          <input className={Styles.input} type="text" />
+          <input className={Styles.inputUno} type="text" />
         </div>
         {/* Quinto cuadro donde estan los datos de la tarjeta */}
         <div className={Styles.quintoCuadro}>
           <p className={Styles.texto}>
             Numero de tarjeta:
           </p>
-          <input className={Styles.input} type="text" />
+          <input className={Styles.inputDos} type="number" />
           <p className={Styles.texto}>
             Nombre de la tarjeta:
           </p>
-          <input className={Styles.input} type="text" />
+          <input className={Styles.inputTres} type="text" />
           <p className={Styles.texto}>
-            CVV 
+            CVV:
           </p>
-          <input className={Styles.input} type="text" />
+          <input className={Styles.inputCuatro} type="text" />
         </div>
         {/* Boton para confirmar la compra */}
         <button className={Styles.boton}>
