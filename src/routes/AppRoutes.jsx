@@ -11,8 +11,6 @@ import HistorialAdmin from "../pages/admin/HistorialAdmin";
 import Productos from "../pages/admin/Productos";
 import IaPortal from "../pages/client/IaPortal";
 import IaLoader from "../pages/client/IaLoader";
-import Ordenes from "../pages/admin/Ordenes";
-import IA from "../pages/admin/IA";
 
 export default function AppRoutes() {
   return (
@@ -55,12 +53,7 @@ export default function AppRoutes() {
 
       {/* 404 */}
       <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
-
-      {/* Admin orders */}
-      <Route path="/ordenes" element={<Ordenes />} />
-
-      {/* Pedido IA */}
-      <Route path="/pedidoIA" element={<IA />} />
+      
     </Routes>
   );
 }

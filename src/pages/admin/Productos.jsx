@@ -34,7 +34,7 @@ export default function Productos() {
   const { state, dispatch } = useProductosContext();
 
   const [productoForm, setProductoForm] = useState({
-    id:0,
+    id: 0,
     categoria: "",
     nombre: "",
     descripcion: "",
@@ -65,7 +65,7 @@ export default function Productos() {
       console.log("Hay espacios vacios");
     }
     setProductoForm({
-      id:0,
+      id: 0,
       categoria: "",
       nombre: "",
       descripcion: "",
@@ -85,7 +85,7 @@ export default function Productos() {
 
   const editarProducto = (producto) => {
     setProductoForm({
-      id:producto.id,
+      id: producto.id,
       categoria: producto.categoria,
       nombre: producto.nombre,
       descripcion: producto.descripcion,
@@ -109,10 +109,14 @@ export default function Productos() {
   };
 
   const handleFile = (e) => {
-    handleChange(e);
     const file = e.target.files[0];
     if (file) {
-      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+        setProductoForm({ ...productoForm, imagen: reader.result });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -221,9 +225,7 @@ export default function Productos() {
               {image ? (
                 <img
                   className={styles.imagenDropped}
-                  src={
-                    image instanceof File ? URL.createObjectURL(image) : image
-                  }
+                  src={image}
                   alt="preview"
                 />
               ) : (

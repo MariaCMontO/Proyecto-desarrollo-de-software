@@ -44,7 +44,7 @@ export default function CartDetail({ producto, setNotaModal, historial }) {
               +
             </button>
           </div>
-          <p className={styles.subtotal}>
+          <p className={`${styles.subtotal} ${historial&& styles.subtotalGrande}`}>
             Subtotal:
             <span>
               {formatoCOP.format(producto.precio * producto.cantidad)}
@@ -52,18 +52,21 @@ export default function CartDetail({ producto, setNotaModal, historial }) {
           </p>
           {producto.nota != "" ? (
             <div className={styles.contenedorNota}>
-              <p className={styles.nota}>{producto.nota}</p>
+              <p className={`${styles.nota}`}>{producto.nota}</p>
               <button className={`${styles.editarBoton} ${historial&& styles.hidden}`} onClick={() => setNotaModal(producto)}>
                 <img className={styles.editarImagen} src="/editar_icon.png" alt="" />
               </button>
             </div>
           ) : (
+            <div>
             <button
               className={`${styles.agregarBoton} ${historial&& styles.hidden}`}
               onClick={() => setNotaModal(producto)}
             >
               Agregar nota
             </button>
+            <p className={`${historial? styles.notaGrande: styles.hidden}`}>No hay notas</p>
+            </div>
           )}
         </div>
       </div>

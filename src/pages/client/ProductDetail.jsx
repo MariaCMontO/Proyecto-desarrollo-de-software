@@ -8,6 +8,7 @@ export default function ProductDetail({producto, setModal}) {
   const{formatoCOP}= useHelpers()
   const{dispatch}=useCarritoContext()
 
+
   return (
     <div className={styles.contenedor}>
         <div className={styles.contenedorImagen} onClick={()=> setModal(producto)}>

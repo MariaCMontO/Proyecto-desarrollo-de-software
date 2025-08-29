@@ -3,13 +3,12 @@ import { useCarritoContext } from "../context/carritoContext";
 import { useHelpers } from "../hooks/useHelpers";
 import styles from "./CartSumary.module.css";
 
-export default function CartSumary() {
-
-  const {formatoCOP}=useHelpers()
-  const { state: stateCarrito} = useCarritoContext();
+export default function CartSumary({ recibo }) {
+  const { formatoCOP } = useHelpers();
+  const { state: stateCarrito } = useCarritoContext();
   const total = stateCarrito.carrito.reduce((total, producto) => {
     return total + producto.precio * producto.cantidad;
-  }, 0)
+  }, 0);
 
   return (
     <div className={styles.contenedor}>
@@ -21,14 +20,16 @@ export default function CartSumary() {
         <p className={styles.texto}>Propina(10%):</p>
         <p className={styles.texto}>{formatoCOP.format(total * 0.1)}</p>
       </div>
-      <hr />
+      {!recibo && <hr />}
       <div className={styles.contenedorFlex}>
         <p className={styles.textoRojo}>Total:</p>
         <p className={styles.textoRojo}>{formatoCOP.format(total * 1.1)}</p>
       </div>
-      <Link to="/pago">
-      <button className={styles.boton}>PAGAR</button>
-      </Link>
+      {!recibo && (
+        <Link to="/pago" state={{ia:false}}>
+          <button className={styles.boton}>PAGAR</button>
+        </Link>
+      )}
     </div>
   );
 }

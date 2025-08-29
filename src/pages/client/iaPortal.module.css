@@ -1,26 +1,98 @@
-
-.contenedor {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  padding-inline: 90px;
-  padding-block: 20px;
-  border-radius: 20px;
-  width: fit-content;
-  opacity: 100%;
-  z-index: 20;
+.cuadroPrincipal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--azul-oscuro-fondo);
   display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.cuadroSecundario {
+  background: var(--azul-medio);
+  padding: 2rem;
+  border-radius: 46px;
+  width: 587px;
+  display: flex;
+  gap: 10px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+}
+.logo {
+  width: 233px;
+  height: 56px;
+}
+.titulo {
+  font-family: var(--titulos);
+  font-size: 33px;
+  text-align: center;
+  width: 463px;
+  color: white;
+}
+
+.cuadroPreguntas {
+  display: flex;
+  align-items: center; /* Alinea verticalmente */
+  justify-content: space-between;
+  border: 2px solid #cccccc5a;
+  text-align: left;
+  padding: 10px;
+  border-radius: 10px;
+}
+.contenedorPregunta1,
+.contenedorPregunta2 {
+  display: flex;
+  align-items: center;
+}
+
+.pregunta {
+  width: 125px;
+  font-family: var(--parrafos);
+  font-size: 12px;
+  font-weight: bold;
+  text-align: left;
+}
+.inputUno {
+  background-color: white;
+  width: 28%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 78px;
+  font-size: 1rem;
+  color: black;
+}
+.inputDos {
+  background-color: white;
+  width: 166px;
+  height: 100px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: black;
+}
+.cuadroRojo {
+  margin-top: 1.5rem;
+  padding: 20px;
+  color: var(--rojo-vibrante);
+  font-family: var(--banner-secundario);
+  text-align: center;
+  font-size: 15px;
+  border: 2px solid #cccccc5a;
+  border-radius: 10px;
 }
 
 .boton{
+    width: 100%;
     background-color: var(--rojo-vibrante);
     color: white;
     font-family: var(--titulos);
+    font-weight: bold;
     border: none;
     font-size: 14px;
     padding: 5px;
@@ -30,24 +102,4 @@
 
 .boton:hover{
     background-color: #fc4444;
-}
-
-@media (max-width: 768px) {
-  .contenedor {
-    padding-inline: 30px;
-    border-radius: 15px;
-  }
-  .contenedorImagen {
-    width: 250px;
-    height: 180px;
-  }
-
-  .imagen {
-    width: 250px;
-    top: -30px;
-  }
-
-  .precio {
-    font-size: 24px;
-  }
 }
