@@ -20,11 +20,6 @@ export default function Landing() {
               Realizar Pedido
             </button>
           </Link>
-          <Link to={"/login"}>
-            <button className={styles.login}>
-              Login
-            </button>
-          </Link>
         </nav>
       </header>
       <main>
@@ -35,9 +30,20 @@ export default function Landing() {
             <p>DESARROLLAMOS LA FÓRMULA</p>
             <p>A LA NO TE PODRÁS RESISTIR</p>
           </div>
+
+          <section className={styles.seccionNosotros}>
+            <div className={styles.parrafo}>
+              <div className={styles.fondo}>
+                <img src="/fondo_nosotros.jpg" alt="Fondo nosotros" />
+              </div>
+            </div>
+          </section >
+
+
+
         </div>
 
-      </main>
-    </div>
+      </main >
+    </div >
   );
 }
