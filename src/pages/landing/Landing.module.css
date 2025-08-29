@@ -4,7 +4,6 @@ body {
   font-family: 'PT Sans Narrow', sans-serif;
   background-color: #1e1e24;
   color: #f4f4fa;
-  overflow-x: hidden;
 }
 
 /* Navegación */
@@ -134,11 +133,16 @@ main {
   cursor: pointer;
   transition: background-color 0.3s;
 }
- .fondo {
+
+
+
+.seccionNosotros_imagen {
   position: fixed;
   top: 0;
+  left: 0;
   opacity: 0.5;
- }
+  
+}
 
 
 
@@ -203,12 +207,5 @@ main {
     font-size: 1rem;
   }
 
-  /*  <p>En FoodLab creemos que la buena comida no solo se cocina… ¡se formula! Somos un restaurante
-                de comida rápida donde cada bocado es el resultado de una receta precisa: sabor, calidad y rapidez
-                en la medida perfecta.</p>
-              <p>Inspirados en la creatividad de un laboratorio, combinamos ingredientes frescos,
-                técnicas innovadoras y un toque de locura culinaria para sorprenderte en cada visita.
-                Nuestro objetivo es simple: que disfrutes de tu comida favorita con la fórmula que siempre funciona — rápida,
-                deliciosa y con un estilo único.</p>*/
 
 }
