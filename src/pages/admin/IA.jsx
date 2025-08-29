@@ -5,8 +5,8 @@ export default function
 
 () {
   return (
-    <div className={styles.cuadroPrincipal}>
-        <div className={styles.cuadroSecundario}>
+    <div className={Styles.cuadroPrincipal}>
+        <div className={Styles.cuadroSecundario}>
             <img className={Styles.logo} src="/Logo.png" alt="Logo" />
             {/* Titulo del cuadro secundario */}
             <h1>

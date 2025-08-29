@@ -8,6 +8,7 @@ import Profile from "../pages/client/Profile";
 import Historial from "../pages/client/Historial";
 import Payment from "../pages/client/Payment";
 import Ordenes from "../pages/admin/Ordenes";
+import IA from "../pages/admin/IA";
 
 export default function AppRoutes() {
   return (
@@ -41,6 +42,9 @@ export default function AppRoutes() {
 
       {/* Admin orders */}
       <Route path="/ordenes" element={<Ordenes />} />
+
+      {/* Pedido IA */}
+      <Route path="/pedidoIA" element={<IA />} />
     </Routes>
   );
 }
