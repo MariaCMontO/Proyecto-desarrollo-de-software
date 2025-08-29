@@ -12,18 +12,43 @@ export const stateInicial = {
 //Creamos el reducer
 export const historialReducer = (state = stateInicial, action) => {
   if (action.type === "Agregar al historial") {
-    console.log("entro a añadir al historial");
     const nuevaOrden = {
       id:crypto.randomUUID().substring(0,5),
       productos: action.payload.productos,
       cliente: action.payload.cliente,
-      estado: "Confirmada"
+      estado: "Confirmada",
+      fecha:new Date().toLocaleDateString()
     };
+
     const nuevoHistorial = [...state.historial, nuevaOrden];
+    
     return {
       ...state,
       historial: nuevoHistorial,
     };
+  }
+
+  if(action.type==='Cambiar estado'){
+    const ordenNueva=state.historial.find((orden)=> orden.id===action.payload.orden.id)
+    console.log('Entro a cambiar estado')
+
+    let nuevoHistorial=[]
+
+    if(ordenNueva){
+      nuevoHistorial=state.historial.map((orden) => {
+        if(orden.id=== ordenNueva.id){
+          return {...orden, estado:action.payload.estado}
+        }else{
+          return {...orden}
+        }
+      })
+    }
+
+    console.log(nuevoHistorial)
+    return {
+      ...state,
+      historial: nuevoHistorial
+    }
   }
 
   return state;

@@ -5,6 +5,8 @@
 }
 
 .contenedor{
+    background-color: transparent;
+    border: none;
     width: 102px;
     height: 102px;
     display: flex;
@@ -19,7 +21,10 @@
 
 .contenedor:hover{
     background-color: var(--rojo-vibrante);
-    
+}
+
+.active{
+    background-color: var(--rojo-vibrante);
 }
 
 .contenedor .active{
@@ -35,6 +40,4 @@
     color: white;
     font-size: 18px;
     font-family: var(--titulos);
-    text-decoration: none;
-    text-decoration-line: none;
 }

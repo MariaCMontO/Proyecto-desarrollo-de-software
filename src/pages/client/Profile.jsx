@@ -2,9 +2,21 @@ import { useState } from "react";
 import styles from "./Profile.module.css";
 import NavApp from "../../components/NavApp";
 import CategoryIcon from "../../components/CategoryIcon";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import IaLoader from "./IaLoader";
 
 export default function Profile() {
+  //Loader de IA
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleNavigateIA = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/iaPortal");
+    }, 1500);
+  };
   const nav = [
     { nombre: "Menu", imagen: "/menu_icon.svg", link: "/cliente" },
     { nombre: "Historial", imagen: "/historial_icon.svg", link: "/historial" },
@@ -12,7 +24,8 @@ export default function Profile() {
     {
       nombre: "IA",
       imagen: "/ia_icon.png",
-      link: "/cliente",
+      link: "/iaPortal",
+      custom: handleNavigateIA,
     },
   ];
 
@@ -232,6 +245,7 @@ export default function Profile() {
           </Link>
         </div>
       </div>
+      {loading && <IaLoader />}
     </main>
   );
 }
