@@ -1,7 +1,6 @@
 import CategoryIcon from "../../components/CategoryIcon";
 import NavApp from "../../components/NavApp";
 import styles from "./AppClient.module.css";
-import data from "../../data/productData.json";
 import ProductDetail from "./ProductDetail";
 import CartDetail from "../../components/CartDetail";
 import CartSumary from "../../components/CartSumary";
@@ -10,13 +9,34 @@ import { useEffect, useState } from "react";
 import ProductModal from "./ProductModal";
 import NotaModal from "./NotaModal";
 import { useHistorialContext } from "../../context/historialContext";
+import Ia from "./IaLoader";
+import { useNavigate } from "react-router-dom";
+import { useProductosContext } from "../../context/productosContext";
+import IaLoader from "./IaLoader";
 
 export default function AppClient() {
+  //Loader de IA
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleNavigateIA = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/iaPortal");
+    }, 1500);
+  };
+
   const nav = [
     { nombre: "Menu", imagen: "/menu_icon.svg", link: "/cliente" },
     { nombre: "Historial", imagen: "/historial_icon.svg", link: "/historial" },
     { nombre: "Perfil", imagen: "/perfil_icon.svg", link: "/perfil" },
-    { nombre: "IA", imagen: "/ia_icon.png", link: "/cliente" },
+    {
+      nombre: "IA",
+      imagen: "/ia_icon.png",
+      link: "/iaPortal",
+      custom: handleNavigateIA,
+    },
   ];
 
   const icons = [
@@ -25,6 +45,7 @@ export default function AppClient() {
     { nombre: "Pizzas", imagen: "/icon_pizza.svg" },
   ];
 
+  //Estados
   const { state: stateCarrito, dispatch } = useCarritoContext();
   const { state: stateHistorial } = useHistorialContext();
   const [category, setCategory] = useState();
@@ -32,10 +53,7 @@ export default function AppClient() {
   const [showCart, setShowCart] = useState(false);
   const [modal, setModal] = useState(null);
   const [notaModal, setNotaModal] = useState(null);
-
-  useEffect(() => {
-    localStorage.setItem("carrito", JSON.stringify(stateCarrito.carrito));
-  }, [stateCarrito.carrito]);
+  const { state: stateProductos } = useProductosContext();
 
   return (
     <main className={styles.contenedor}>
@@ -75,7 +93,7 @@ export default function AppClient() {
             </button>
           </div>
           <div className={styles.productContainer}>
-            {data
+            {stateProductos.productos
               .filter((producto) => {
                 if (!category) return true;
                 return producto.categoria === category;
@@ -135,6 +153,7 @@ export default function AppClient() {
       {notaModal && (
         <NotaModal setNotaModal={setNotaModal} notaModal={notaModal} />
       )}
+      {loading && <IaLoader />}
     </main>
   );
 }

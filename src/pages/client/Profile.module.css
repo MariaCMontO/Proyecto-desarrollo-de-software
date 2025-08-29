@@ -169,14 +169,6 @@ textarea:focus {
   gap: 10px;
 }
 
-input {
-  background-color: transparent;
-  border: 1px solid white;
-  border-radius: 10px;
-  width: 100%;
-  color: white;
-  font-family: var(--titulos);
-}
 /* Para Chrome, Safari, Edge y Opera */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -195,9 +187,21 @@ input[type="number"] {
   align-items: center;
 }
 .inputMetodo {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 10px;
+  width: 100%;
+  color: white;
+  font-family: var(--titulos);
   height: 50px;
 }
 .inputNumero {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 10px;
+  width: 100%;
+  color: white;
+  font-family: var(--titulos);
   height: 25px;
 }
 .boton {
