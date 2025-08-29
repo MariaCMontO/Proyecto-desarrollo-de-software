@@ -7,6 +7,7 @@ import AppAdmin from "../pages/admin/AppAdmin";
 import Profile from "../pages/client/Profile";
 import Historial from "../pages/client/Historial";
 import Payment from "../pages/client/Payment";
+import Ordenes from "../pages/admin/Ordenes";
 
 export default function AppRoutes() {
   return (
@@ -37,6 +38,9 @@ export default function AppRoutes() {
 
       {/* 404 */}
       <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
+
+      {/* Admin orders */}
+      <Route path="/ordenes" element={<Ordenes />} />
     </Routes>
   );
 }

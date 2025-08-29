@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './IA.module.css'
+import Styles from './IA.module.css'
 
 export default function 
 

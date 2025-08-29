@@ -1,6 +1,5 @@
 import React from 'react'
-import styles from './Ordenes.module.css'
-  
+import Styles from './Ordenes.module.css'
 export default function Ordenes() {
 
     // Hasta el return es javascript
