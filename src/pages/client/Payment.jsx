@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCarritoContext } from "../../context/carritoContext";
 import { useHistorialContext } from "../../context/historialContext";
 import Styles from "./Payment.module.css";
@@ -15,6 +15,7 @@ export default function Payment() {
 
   const location = useLocation();
   const { ia } = location.state;
+  const navigate= useNavigate()
 
   const submit = () => {
     if (stateCarrito.carrito.length >= 1) {
@@ -23,6 +24,7 @@ export default function Payment() {
         payload: { productos, cliente: "Juan" },
       });
       carritoDispatch({ type: "Vaciar carrito" });
+      navigate("/cliente")
     }
   };
 
@@ -77,14 +79,10 @@ export default function Payment() {
           </div>
         </div>
         {/* Boton para confirmar la compra */}
-        <Link
-          to={stateCarrito.carrito.length >= 1 ? "/cliente" : ""}
-          className={Styles.boton}
-        >
           <button className={Styles.boton} onClick={submit}>
             FINALIZAR COMPRA
           </button>
-        </Link>
+
       </div>
     </div>
   );
