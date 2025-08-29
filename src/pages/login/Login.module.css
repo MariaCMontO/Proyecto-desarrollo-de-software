@@ -97,6 +97,7 @@ input[type="password"] {
     font-family: var(--parrafos);
     font-size: 16px;
     font-weight: bolder;
+    color: black;
 }
 
 .formulario input[type="text"],
@@ -188,7 +189,7 @@ input[type="password"]::placeholder {
     cursor: pointer;
 }
 
-@media (max-width: 770px) {
+@media (max-width: 768px) {
 
     .clearfix {
         float: none;
