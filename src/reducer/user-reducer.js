@@ -12,7 +12,7 @@ const usuarioActivoInicial = () => {
 
 export const stateInicial = {
   usuarios: usuariosInicial(),
-  usuarioActivo:usuarioActivoInicial()
+  usuarioActivo: usuarioActivoInicial(),
 };
 
 export function usuariosReducer(state = stateInicial, action) {
@@ -41,21 +41,28 @@ export function usuariosReducer(state = stateInicial, action) {
       usuarios: nuevoUsuarios,
     };
   }
-  if(action.type==='Usuario activo'){
-    console.log('Desde usuario activo')
-    const usuarioActivoN=state.usuarios.find((usuario) => usuario.id=== action.payload.usuario.id)
-    return{
+  if (action.type === "Usuario activo") {
+    console.log("Desde usuario activo");
+    const usuarioActivoN = state.usuarios.find(
+      (usuario) => usuario.id === action.payload.usuario.id
+    );
+    return {
       ...state,
-      usuarioActivo:usuarioActivoN
-    }
+      usuarioActivo: usuarioActivoN,
+    };
   }
-  if(action.type==='Actualizar usuarioActivo'){
-    const usuario=state.usuarios.find((usuario)=> usuario.id===state.usuarioActivo.id)
-
-    return{
-      ...state,
-      usuarioActivo:usuario
+  if (action.type === "Actualizar usuarioActivo") {
+    let usuario= state.usuarioActivo;
+    if (state.usuarioActivo !== null) {
+       usuario = state.usuarios.find(
+        (usuario) => usuario.id === state.usuarioActivo.id
+      );
     }
+
+    return {
+      ...state,
+      usuarioActivo: usuario,
+    };
   }
   return state;
 }
