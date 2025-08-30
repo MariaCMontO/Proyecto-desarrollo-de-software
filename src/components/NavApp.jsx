@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styles from "./NavApp.module.css";
 
-export default function NavApp({ elementos, custom }) {
+export default function NavApp({ elementos, custom}) {
   return (
     <>
       <div className={styles.contenedorPrincipal}>
@@ -17,6 +17,7 @@ export default function NavApp({ elementos, custom }) {
             </button>
           ) : (
             <NavLink
+              state={{usuario:elemento.usuario}}
               to={elemento.link}
               key={elemento.nombre}
               className={({ isActive }) =>

@@ -3,6 +3,7 @@ import NavApp from "../../components/NavApp";
 import styles from "./OrdenesAdmin.module.css";
 import { useHistorialContext } from "../../context/historialContext";
 import HistorialDetail from "../../components/HistorialDetail";
+import { useLocation } from "react-router-dom";
 
 export default function OrdenesAdmin() {
   const nav = [

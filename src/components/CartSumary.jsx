@@ -3,7 +3,7 @@ import { useCarritoContext } from "../context/carritoContext";
 import { useHelpers } from "../hooks/useHelpers";
 import styles from "./CartSumary.module.css";
 
-export default function CartSumary({ recibo }) {
+export default function CartSumary({ recibo, usuario }) {
   const { formatoCOP } = useHelpers();
   const { state: stateCarrito } = useCarritoContext();
   const total = stateCarrito.carrito.reduce((total, producto) => {

@@ -109,6 +109,7 @@ textarea {
   width: 100%;
   color: white;
   font-family: var(--titulos);
+  padding: 10px;
 }
 input:focus,
 textarea:focus {
@@ -187,6 +188,7 @@ input[type="number"] {
   align-items: center;
 }
 .inputMetodo {
+  padding: 5px;
   background-color: transparent;
   border: 1px solid white;
   border-radius: 10px;
@@ -196,6 +198,7 @@ input[type="number"] {
   height: 50px;
 }
 .inputNumero {
+  padding: 5px;
   background-color: transparent;
   border: 1px solid white;
   border-radius: 10px;

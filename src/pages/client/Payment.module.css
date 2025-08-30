@@ -113,7 +113,12 @@
 .boton:hover {
   background-color: #fc4444;
 }
-
+.form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 @media (max-width: 768px) {
   .texto{
     font-size: 14px;

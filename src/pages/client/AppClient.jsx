@@ -9,12 +9,17 @@ import { useEffect, useState } from "react";
 import ProductModal from "./ProductModal";
 import NotaModal from "./NotaModal";
 import { useHistorialContext } from "../../context/historialContext";
-import Ia from "./IaLoader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useProductosContext } from "../../context/productosContext";
 import IaLoader from "./IaLoader";
+import { useUsuariosContext } from "../../context/usuariosContext";
 
 export default function AppClient() {
+
+  //Usuario registrado
+  const {state}= useUsuariosContext()
+  const {usuario}=state
+
   //Loader de IA
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -28,7 +33,7 @@ export default function AppClient() {
   };
 
   const nav = [
-    { nombre: "Menu", imagen: "/menu_icon.svg", link: "/cliente" },
+    { nombre: "Menu", imagen: "/menu_icon.svg", link: "/cliente"},
     { nombre: "Historial", imagen: "/historial_icon.svg", link: "/historial" },
     { nombre: "Perfil", imagen: "/perfil_icon.svg", link: "/perfil" },
     {
@@ -145,7 +150,9 @@ export default function AppClient() {
             ))}
           </div>
           <div className={styles.resumen}>
-            <CartSumary />
+            <CartSumary
+            usuario={usuario}
+            />
           </div>
         </div>
       </div>

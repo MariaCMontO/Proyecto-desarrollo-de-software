@@ -116,7 +116,7 @@ input[type="password"]::placeholder {
     width: 420px !important;
 }
 
-.formulario input[type="submit"] {
+.boton {
     padding: 0px !important;
     margin-top: 12px;
     margin-left: 19%;
@@ -128,7 +128,7 @@ input[type="password"]::placeholder {
     color: azure;
 }
 
-.formulario input[type="submit"]:hover {
+.boton:hover {
     border: 1px solid whitesmoke;
     box-shadow: inset 1px 1px 1px 1px ghostwhite;
     cursor: pointer;
@@ -261,7 +261,7 @@ input[type="password"]::placeholder {
         margin-left: -4px !important;
     }
 
-    .formulario input[type="submit"] {
+    .boton {
         padding: 0px !important;
         margin-top: 12px;
         margin-left: 22%;
@@ -273,7 +273,7 @@ input[type="password"]::placeholder {
         color: azure;
     }
 
-    .formulario input[type="submit"]:hover {
+    .boton:hover {
         border: 1px solid whitesmoke;
         box-shadow: inset 1px 1px 1px 1px ghostwhite;
         cursor: pointer;

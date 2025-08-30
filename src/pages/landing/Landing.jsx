@@ -15,7 +15,7 @@ export default function Landing() {
               <p>Contacto</p>
             </div>
           </div>
-          <Link to="/cliente">
+          <Link to="/login">
             <button className={styles.navegacion_boton_realizar_pedido}>
               Realizar Pedido
             </button>

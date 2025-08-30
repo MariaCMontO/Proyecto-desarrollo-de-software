@@ -5,8 +5,12 @@ import { useHistorialContext } from "../../context/historialContext";
 import HistorialDetail from "../../components/HistorialDetail";
 import { useNavigate } from "react-router-dom";
 import IaLoader from "./IaLoader";
+import { useUsuariosContext } from "../../context/usuariosContext";
 
 export default function Historial() {
+  //Usuario registrado
+  const {state:stateUsuario}= useUsuariosContext()
+  const {usuarioActivo: usuario}= stateUsuario
   //Loader de IA
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -19,9 +23,9 @@ export default function Historial() {
     }, 1500);
   };
   const nav = [
-    { nombre: "Menu", imagen: "/menu_icon.svg", link: "/cliente" },
-    { nombre: "Historial", imagen: "/historial_icon.svg", link: "/historial" },
-    { nombre: "Perfil", imagen: "/perfil_icon.svg", link: "/perfil" },
+    { nombre: "Menu", imagen: "/menu_icon.svg", link: "/cliente", usuario: usuario },
+    { nombre: "Historial", imagen: "/historial_icon.svg", link: "/historial", usuario: usuario },
+    { nombre: "Perfil", imagen: "/perfil_icon.svg", link: "/perfil", usuario: usuario },
     {
       nombre: "IA",
       imagen: "/ia_icon.png",
@@ -55,7 +59,7 @@ export default function Historial() {
         </div>
         <div className={styles.contenedorHistorial}>
           {state.historial
-          .filter((orden) => orden.cliente==='Juan' && orden.estado==='lista')
+          .filter((orden) => orden.cliente.id===usuario.id && orden.estado==='lista')
           .map((orden) => (
             <HistorialDetail
             key={orden.id}

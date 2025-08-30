@@ -1,43 +1,134 @@
-import { Link } from "react-router-dom";
-import styles from './Registro.module.css'
+import { Link, useNavigate } from "react-router-dom";
+import styles from "./Registro.module.css";
+import { useState } from "react";
+import { useUsuariosContext } from "../../context/usuariosContext";
+import { v4 as uuid } from "uuid";
 
 export default function Registration() {
-    return (
-        <div className={styles.contenedor} >
-            <img className={styles.vanished} src="/fondo_registro_recortada.png" alt="Fondo" />
+  const usuarioVacio = {
+    id: "",
+    nombre: "",
+    email: "",
+    contraseña: "",
+    celular: "",
+    direccion: "",
+    tipo: "",
+    ingredientes: "",
+    restricciones: "",
+    expectativas: "",
+    favorita: "",
+    pago: {
+      metodo: "",
+      numero: "",
+      nombreT: "",
+      cvv: "",
+    },
+  };
 
-            <Link to="/">
-                <button className={styles.back}>Regresar</button>
-            </Link>
+  const navigate = useNavigate();
+  const [usuario, setUsuario] = useState(usuarioVacio);
+  const { dispatch } = useUsuariosContext();
 
-            <section className={styles.registro}>
-                <div className={styles.formulario}>
-                    <h2>Registrate</h2>
-                    <form>
-                        <label htmlFor="nombre">Nombre: </label>
-                        <input type="text" placeholder="Nombres Apellidos" />
+  const handleChange = (e) => {
+    console.log(usuario);
+    setUsuario({
+      ...usuario,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-                        <label htmlFor="email">Email: </label>
-                        <input type="text" placeholder="correo@gmail.com" />
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-                        <label htmlFor="contraseña">Contraseña: </label>
-                        <input type="password" placeholder="***********" />
+    const usuarioCreado = {
+      ...usuario,
+      id: uuid(),
+      tipo:'cliente'
+    }
 
-                        <label htmlFor="celular">Celular: </label>
-                        <input type="text" placeholder="123 456 7890" />
+    dispatch({ type: "Añadir usuario", payload: { usuario: usuarioCreado } });
+    navigate("/login");
+  };
 
-                        <label htmlFor="direccion">Direccion: </label>
-                        <input type="text" placeholder="##########" />
+  return (
+    <div className={styles.contenedor}>
+      <img
+        className={styles.vanished}
+        src="/fondo_registro_recortada.png"
+        alt="Fondo"
+      />
 
-                        <div className={styles.contenedor_terminos}>
-                            <input className={styles.check_terminos} type="checkbox" name="acepto" value="acepto" />
-                            <label className={styles.texto_terminos} for="checkbox">Aceptar términos y condiciones.</label>
-                        </div>
+      <Link to="/">
+        <button className={styles.back}>Regresar</button>
+      </Link>
 
-                        <input type="submit" value="REGISTRARSE" />
-                    </form>
-                </div>
-            </section>
+      <section className={styles.registro}>
+        <div className={styles.formulario}>
+          <h2>Registrate</h2>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="nombre">Nombre: </label>
+            <input
+              type="text"
+              placeholder="Nombres Apellidos"
+              name="nombre"
+              id="nombre"
+              onChange={handleChange}
+            />
+
+            <label htmlFor="email">Email: </label>
+            <input
+              type="text"
+              placeholder="correo@gmail.com"
+              name="email"
+              id="email"
+              onChange={handleChange}
+            />
+
+            <label htmlFor="contraseña">Contraseña: </label>
+            <input
+              type="password"
+              placeholder="***********"
+              name="contraseña"
+              id="contraseña"
+              onChange={handleChange}
+            />
+
+            <label htmlFor="celular">Celular: </label>
+            <input
+              type="text"
+              placeholder="123 456 7890"
+              name="celular"
+              id="celular"
+              onChange={handleChange}
+            />
+
+            <label htmlFor="direccion">Direccion: </label>
+            <input
+              type="text"
+              placeholder="##########"
+              name="direccion"
+              id="direccion"
+              onChange={handleChange}
+            />
+
+            <div className={styles.contenedor_terminos}>
+              <input
+                className={styles.check_terminos}
+                type="checkbox"
+                name="acepto"
+                value="acepto"
+              />
+              <label className={styles.texto_terminos} htmlFor="checkbox">
+                Aceptar términos y condiciones.
+              </label>
+            </div>
+
+            <button type="submit" className={styles.boton}>
+              REGISTRARSE
+            </button>
+          </form>
         </div>
-    )
+      </section>
+    </div>
+  );
 }

@@ -4,27 +4,52 @@ import { useHistorialContext } from "../../context/historialContext";
 import Styles from "./Payment.module.css";
 import CartDetail from "../../components/CartDetail";
 import CartSumary from "../../components/CartSumary";
+import { useEffect, useState } from "react";
+import { useUsuariosContext } from "../../context/usuariosContext";
 
 export default function Payment() {
   const { state: stateCarrito, dispatch: carritoDispatch } =
     useCarritoContext();
-  const { state: stateHistorial, dispatch: historialDispatch } =
-    useHistorialContext();
+  const { dispatch: historialDispatch } = useHistorialContext();
 
   const productos = stateCarrito.carrito;
 
   const location = useLocation();
   const { ia } = location.state;
-  const navigate= useNavigate()
+  const navigate = useNavigate();
 
-  const submit = () => {
-    if (stateCarrito.carrito.length >= 1) {
+  //Usuario registrado
+  const { state: stateUsuario } = useUsuariosContext();
+  const { usuarioActivo: usuario } = stateUsuario;
+  const [usuarioN, setUsuarioN] = useState(usuario);
+  const [pago, setPago] = useState(usuarioN.pago);
+  const { state } = useUsuariosContext();
+  useEffect(() => {
+    const actualizado = state.usuarios.find((us) => us.id === usuario.id);
+    if (actualizado) setUsuarioN(actualizado);
+  }, [state.usuarios]);
+
+  useEffect(() => {
+    setPago(usuarioN.pago);
+  }, [usuarioN]);
+
+  const handleChange = (e) => {
+    setPago({
+      ...pago,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (stateCarrito.carrito.length >= 1 && !Object.values(pago).includes("")) {
+      console.log("Compra correcta");
       historialDispatch({
         type: "Agregar al historial",
-        payload: { productos, cliente: "Juan" },
+        payload: { productos, cliente: usuarioN },
       });
       carritoDispatch({ type: "Vaciar carrito" });
-      navigate("/cliente")
+      navigate("/cliente", { state: { usuario: usuarioN } });
     }
   };
 
@@ -52,37 +77,58 @@ export default function Payment() {
           <CartSumary recibo={true} />
         </div>
         {/* Cuarto cuadro donde esta el input del metodo de pago */}
-        <div className={Styles.cuartoCuadro}>
-          <label htmlFor="metodo" className={Styles.texto}>
-            Metodo de pago
-          </label>
-          <input
-            className={Styles.input}
-            type="text"
-            id="metodo"
-            name="metodo"
-          />
-        </div>
-        {/* Quinto cuadro donde estan los datos de la tarjeta */}
-        <div className={Styles.quintoCuadro}>
-          <div className={Styles.contenedor}>
-            <p className={Styles.texto}>Numero de tarjeta:</p>
-            <input className={Styles.input} type="number" />
+        <form className={Styles.form} onSubmit={handleSubmit}>
+          <div className={Styles.cuartoCuadro}>
+            <label htmlFor="metodo" className={Styles.texto}>
+              Metodo de pago
+            </label>
+            <input
+              className={Styles.input}
+              type="text"
+              id="metodo"
+              name="metodo"
+              value={pago.metodo}
+              onChange={handleChange}
+            />
           </div>
-          <div className={Styles.contenedor}>
-            <p className={Styles.texto}>Nombre de la tarjeta:</p>
-            <input className={Styles.input} type="text" />
+          {/* Quinto cuadro donde estan los datos de la tarjeta */}
+          <div className={Styles.quintoCuadro}>
+            <div className={Styles.contenedor}>
+              <p className={Styles.texto}>Numero de tarjeta:</p>
+              <input
+                className={Styles.input}
+                type="text"
+                name="numero"
+                value={pago.numero}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={Styles.contenedor}>
+              <p className={Styles.texto}>Nombre de la tarjeta:</p>
+              <input
+                className={Styles.input}
+                type="text"
+                name="nombreT"
+                value={pago.nombreT}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={Styles.contenedor}>
+              <p className={Styles.texto}>CVV:</p>
+              <input
+                className={Styles.input}
+                type="text"
+                name="cvv"
+                value={pago.cvv}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-          <div className={Styles.contenedor}>
-            <p className={Styles.texto}>CVV:</p>
-            <input className={Styles.input} type="text" />
-          </div>
-        </div>
-        {/* Boton para confirmar la compra */}
-          <button className={Styles.boton} onClick={submit}>
+          {/* Boton para confirmar la compra */}
+          <button className={Styles.boton} type="submit">
             FINALIZAR COMPRA
           </button>
-
+        </form>
       </div>
     </div>
   );

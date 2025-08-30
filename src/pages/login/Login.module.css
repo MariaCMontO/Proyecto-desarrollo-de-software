@@ -83,7 +83,7 @@ body {
     font-weight: bolder;
 }
 
-.formulario input[type="text"],
+.formulario input[type="email"],
 input[type="password"] {
     display: block;
     width: 80%;

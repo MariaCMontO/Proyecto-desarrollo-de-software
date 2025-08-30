@@ -27,7 +27,7 @@ export default function HistorialDetail({ orden, gestionar }) {
       </div>
       <div className={styles.contenedorRow}>
         <p className={styles.parrafos}>Cliente:</p>
-        <p className={styles.parrafos}>{orden.cliente}</p>
+        <p className={styles.parrafos}>{orden.cliente.nombre}</p>
       </div>
       <div>
         <div className={styles.contenedorProductos}>
