@@ -38,7 +38,7 @@ body {
     margin-left: 8%;
     width: 800px;
     opacity: 0.1;
-
+    z-index: -1;
 }
 
 .imagenes {
@@ -218,7 +218,6 @@ input[type="password"]::placeholder {
         margin-left: 8px;
         width: 380px;
         opacity: 0.1;
-
     }
 
     .logo {

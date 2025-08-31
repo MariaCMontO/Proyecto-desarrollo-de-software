@@ -34,7 +34,7 @@ body {
 
 .vanished {
     position: absolute;
-    left: 240px;
+    left: 265px;
     top: 30px;
     opacity: 0.6;
     z-index: -1;
@@ -50,6 +50,7 @@ body {
     border-radius: 90px;
     opacity: 0.9;
     margin-top: -20px;
+    margin-left: 96px;
 }
 
 .formulario h2 {
@@ -179,7 +180,7 @@ input[type="password"]::placeholder {
 
     .vanished {
         position: absolute;
-        left: 15px;
+        left: 8px;
         top: 10%;
         z-index: -1;
         width: 100%;
