@@ -56,6 +56,11 @@ public class MetodoPago {
     public void setCvv(Long cvv) {
         this.cvv = cvv;
     }
+
+    @Override
+    public String toString() {
+        return "MetodoPago{" + "metodo=" + metodo + ", numero=" + numero + ", nombreTarjeta=" + nombreTarjeta + ", cvv=" + cvv + '}';
+    }
     
 }
 

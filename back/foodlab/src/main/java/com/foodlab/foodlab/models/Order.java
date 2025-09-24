@@ -17,12 +17,14 @@ public class Order {
     private String date;
     private double total;
     private ArrayList<Integer> products;
+    private Usuario user;
 
-    public Order(String fecha, double total) {
+    public Order(String fecha, double total, Usuario user) {
         this.idOrder = UUID.randomUUID().toString();
         this.date = fecha;
         this.total = total;
         this.products = new ArrayList<>();
+        this.user = user;
         fillProducts();
     }
 
@@ -65,5 +67,14 @@ public class Order {
         this.idOrder = idOrder;
     }
 
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
+
+    
 }
 

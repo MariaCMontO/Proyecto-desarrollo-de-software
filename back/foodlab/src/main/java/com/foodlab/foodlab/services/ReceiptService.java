@@ -4,8 +4,10 @@
  */
 package com.foodlab.foodlab.services;
 
+import com.foodlab.foodlab.models.MetodoPago;
 import com.foodlab.foodlab.models.Order;
 import com.foodlab.foodlab.models.Receipt;
+import com.foodlab.foodlab.models.Usuario;
 import com.foodlab.foodlab.repositories.ReceiptRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +31,14 @@ public class ReceiptService {
 
     private void initSampleData() {
         
-        Order o1 = new Order("Hoy", 75.000);
-        Order o2 = new Order("Viernes", 125.000);
-        Order o3 = new Order("Sabado", 55.000);
-        Order o4 = new Order("Domingo", 35.000);
+        Usuario user1 = new Usuario("123", "Juan", "Email", "contra", "123", "direccion");
+        MetodoPago metP = new MetodoPago("Tarjeta de Credito", 1234456654321L, "Visa", 1234L);
+        user1.setMetodoPago(metP);
+        
+        Order o1 = new Order("Hoy", 75.000, user1);
+        Order o2 = new Order("Viernes", 125.000, user1);
+        Order o3 = new Order("Sabado", 55.000, user1);
+        Order o4 = new Order("Domingo", 35.000, user1);
         
         save(new Receipt(o1));
         save(new Receipt(o2));
