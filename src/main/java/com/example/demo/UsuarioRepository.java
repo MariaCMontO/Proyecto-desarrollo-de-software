@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 @Repository // Se utiliza para marcar la clase como parte de la clase persistencia , es decir , aquella que se encarga de acceder , guardar , modificar y eliminar 
-                        // datos en la base de datos.
+// datos en la base de datos.
 /**
  *
  * @author MATEO
@@ -40,6 +40,16 @@ public class UsuarioRepository {
                 .filter(usuario
                         -> usuario.getNombre().toLowerCase().contains(nombre.toLowerCase()))
                 .collect(Collectors.toList());
+    }
+
+    //Filtrar por email y contrasenia
+    public Usuario findByEmailAndPassword(String email, String password) {
+        Usuario persona = baseDeDatos.values().stream().filter(usuario -> usuario.getEmail().toLowerCase().equalsIgnoreCase(email.toLowerCase())).findFirst().orElse(null);
+        if (persona != null && persona.getContrasenia().equals(password)) {
+            return persona;
+        }else{
+            return null;
+        }
     }
 
     // Eliminar un usuario 

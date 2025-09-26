@@ -63,6 +63,17 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
     
+    //Filtrar por email y contrasenia
+    @GetMapping("/{email}")
+    public ResponseEntity<Usuario> getUsuarioByEmailAndPassword (@RequestParam String email, @RequestParam String password) {
+        Usuario usuario = usuarioService.findByEmailAndPassword(email, password);
+        if (usuario != null) {
+            return new ResponseEntity<>(usuario, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
     @GetMapping("/cabecera")
     public ResponseEntity<String> getAgentInfo(@RequestHeader("User-Agent") String userAgent) {
         String info = "Información del cliente (User-Agent): " + userAgent;
