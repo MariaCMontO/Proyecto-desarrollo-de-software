@@ -16,23 +16,16 @@ public class Order {
     private String idOrder;
     private String date;
     private double total;
-    private ArrayList<Integer> products;
+    private ArrayList<OrdenProducto> products;
     private Usuario user;
+    private String state;
 
-    public Order(String fecha, double total, Usuario user) {
+    public Order(String fecha, Usuario user) {
         this.idOrder = UUID.randomUUID().toString();
         this.date = fecha;
-        this.total = total;
         this.products = new ArrayList<>();
         this.user = user;
-        fillProducts();
-    }
-
-    public final void fillProducts() {
-        this.products.add(1);
-        this.products.add(2);
-        this.products.add(3);
-        this.products.add(4);
+        this.state="confirmada";
     }
 
     public String getDate() {
@@ -51,11 +44,11 @@ public class Order {
         this.total = total;
     }
 
-    public ArrayList<Integer> getProducts() {
+    public ArrayList<OrdenProducto> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<Integer> products) {
+    public void setProducts(ArrayList<OrdenProducto> products) {
         this.products = products;
     }
 
@@ -75,6 +68,21 @@ public class Order {
         this.user = user;
     }
 
-    
-}
+    public String getState() {
+        return state;
+    }
 
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    
+    public void calcularTotal() {
+        double total=products.stream()
+                .mapToDouble(pro -> pro.getProductos().getPrecio() * pro.getCantidad())
+                .reduce(0, (a, b) -> a + b);
+        this.total=total;
+        
+    }
+
+}

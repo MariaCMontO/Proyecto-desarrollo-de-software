@@ -4,6 +4,7 @@
  */
 package com.foodlab.foodlab.services;
 
+import com.foodlab.foodlab.models.OrdenProducto;
 import com.foodlab.foodlab.models.Receipt;
 import java.io.ByteArrayOutputStream;
 import com.lowagie.text.Document;
@@ -35,7 +36,7 @@ public class PdfService {
 
             document.add(new Paragraph(" "));
             document.add(new Paragraph("Productos:"));
-            for (Integer prod : receipt.getOrder().getProducts()) {
+            for (OrdenProducto prod : receipt.getOrder().getProducts()) {
                 document.add(new Paragraph("- Producto ID: " + prod));
             }
 

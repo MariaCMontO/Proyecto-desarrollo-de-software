@@ -50,6 +50,16 @@ public class UsuarioRepository {
                         -> usuario.getNombre().toLowerCase().contains(nombre.toLowerCase()))
                 .collect(Collectors.toList());
     }
+    
+     //Filtrar por email y contrasenia
+    public Usuario findByEmailAndPassword(String email, String password) {
+        Usuario persona = baseDeDatos.values().stream().filter(usuario -> usuario.getEmail().toLowerCase().equals(email.toLowerCase())).findFirst().orElse(null);
+        if (persona != null && persona.getContrasenia().equals(password)) {
+            return persona;
+        }else{
+            return null;
+        }
+    }
 
     // Eliminar un usuario 
     public void deleteById(String id) {

@@ -17,18 +17,19 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private double precio;
-    private int stock;
+    private String imagen;
 
     public Producto() {
         this.idProducto = UUID.randomUUID().toString();
     }
 
-    public Producto(String categoria, String nombre, String descripcion, double precio, int stock) {
+    public Producto(String categoria, String nombre, String descripcion, double precio, String imagen) {
+        this.idProducto=UUID.randomUUID().toString();
         this.categoria = categoria;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
-        this.stock = stock;
+        this.imagen=imagen;
     }
 
     public String getIdProducto() {
@@ -71,12 +72,17 @@ public class Producto {
         this.precio = precio;
     }
 
-    public int getStock() {
-        return stock;
+    public Producto(String imagen) {
+        this.imagen = imagen;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public String getImagen() {
+        return imagen;
     }
 
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    
 }

@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author BryanVanegas
  */
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/foodlab/productos")
 
 public class ProductoController {
 

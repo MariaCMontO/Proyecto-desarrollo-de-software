@@ -79,6 +79,17 @@ public class UsuarioController {
         return new ResponseEntity<>(info, HttpStatus.OK);
     }
     
+    //Filtrar por email y contrasenia
+    @GetMapping
+    public ResponseEntity<Usuario> getUsuarioByEmailAndPassword (@RequestParam(required = true) String email, @RequestParam(required = true) String password) {
+        Usuario usuario = usuarioService.findByEmailAndPassword(email, password);
+        if (usuario != null) {
+            return new ResponseEntity<>(usuario, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable String id) {
         Usuario usuario = usuarioService.findById(id);
