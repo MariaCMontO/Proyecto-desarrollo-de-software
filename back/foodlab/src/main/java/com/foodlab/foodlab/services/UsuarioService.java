@@ -59,6 +59,11 @@ public class UsuarioService {
     public List<Usuario> findByNombre(String nombre) {
         return usuarioRepository.findByNombreContaining(nombre);
     }
+    
+    // Filtrar por email y contrasenia
+    public Usuario findByEmailAndPassword (String email, String password) {
+        return usuarioRepository.findByEmailAndPassword(email, password);
+    }
 
     // Actualizar un usuario 
     public Usuario update(Usuario usuario) {

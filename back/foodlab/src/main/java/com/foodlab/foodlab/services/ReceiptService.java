@@ -35,10 +35,10 @@ public class ReceiptService {
         MetodoPago metP = new MetodoPago("Tarjeta de Credito", 1234456654321L, "Visa", 1234L);
         user1.setMetodoPago(metP);
         
-        Order o1 = new Order("Hoy", 75.000, user1);
-        Order o2 = new Order("Viernes", 125.000, user1);
-        Order o3 = new Order("Sabado", 55.000, user1);
-        Order o4 = new Order("Domingo", 35.000, user1);
+        Order o1 = new Order("Hoy", user1);
+        Order o2 = new Order("Viernes", user1);
+        Order o3 = new Order("Sabado", user1);
+        Order o4 = new Order("Domingo", user1);
         
         save(new Receipt(o1));
         save(new Receipt(o2));
