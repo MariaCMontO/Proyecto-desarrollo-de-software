@@ -31,7 +31,7 @@ public class ReceiptService {
 
     private void initSampleData() {
         
-        Usuario user1 = new Usuario("123", "Juan", "Email", "contra", "123", "direccion");
+        Usuario user1 = new Usuario("123", "Juan", "Email", "contra", "123", "direccion", "tipo");
         MetodoPago metP = new MetodoPago("Tarjeta de Credito", 1234456654321L, "Visa", 1234L);
         user1.setMetodoPago(metP);
         
