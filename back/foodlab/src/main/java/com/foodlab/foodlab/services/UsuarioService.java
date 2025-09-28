@@ -35,9 +35,9 @@ public class UsuarioService {
     }
 
     private void initSampleData() {
-        save(new Usuario("1", "Messi", "messi@eam.com", "123", "3285410320", "Armenia"));
-        save(new Usuario("2", "Cristiano", "cristiano@eam.com", "356", "3151982551", "Bogota"));
-        save(new Usuario("3", "Neymar", "neymar@eam.com", "789", "3368273083", "Cali"));
+        save(new Usuario("1", "Messi", "messi@eam.com", "123", "3285410320", "Armenia", "admin"));
+        save(new Usuario("2", "Cristiano", "cristiano@eam.com", "356", "3151982551", "Bogota", "cliente"));
+        save(new Usuario("3", "Neymar", "neymar@eam.com", "789", "3368273083", "Cali", "cliente"));
     }
 
     // Crear un nuevo usuario 

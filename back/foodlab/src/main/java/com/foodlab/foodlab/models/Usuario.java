@@ -25,13 +25,15 @@ public class Usuario {
     private MetodoPago metodoPago;
     
     // Constructor:
-    public Usuario(String id, String nombre, String email, String contrasenia, String celular, String direccion) {
+    public Usuario(String id, String nombre, String email, String contrasenia, String celular, String direccion, String tipo) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.contrasenia = contrasenia;
         this.celular = celular;
-        this.direccion = direccion; 
+        this.direccion = direccion;
+        this.tipo=tipo;
+        this.metodoPago=new MetodoPago("",0l , "", 0l);
     }
     
     // Getter y Setter:
