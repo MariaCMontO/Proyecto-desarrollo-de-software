@@ -5,8 +5,12 @@
 package com.foodlab.foodlab.controllers;
 
 import com.foodlab.foodlab.models.Receipt;
-import com.foodlab.foodlab.services.PdfService;
 import com.foodlab.foodlab.services.ReceiptService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -26,25 +30,38 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/foodlab/receipts")
+@Tag(name = "Facturas", description = "API para la gestión de las Facturas")
+
 public class ReceiptController {
 
     private final ReceiptService receiptService;
-    private final PdfService pdfService;
 
     @Autowired
-    public ReceiptController(ReceiptService receiptService, PdfService pdfService) {
+    public ReceiptController(ReceiptService receiptService) {
         this.receiptService = receiptService;
-        this.pdfService = pdfService;
     }
 
+    //Obtener todas las facturas
+    
     @GetMapping
+    @Operation(summary = "Obtener todas las facturas", description = "Devuelve una lista con todas las facturas y la informacion contenida en ellas (orden, usuario).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de facturas obtenida con éxito"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     public ResponseEntity<List<Receipt>> getAllReceipts() {
         List<Receipt> receipts = receiptService.findAll();
         return new ResponseEntity<>(receipts, HttpStatus.OK);
     }
 
+    //Buscar Receipt con receiptID
     @GetMapping("/{id}")
-    public ResponseEntity<Receipt> getReceiptById(@PathVariable String id) {
+    @Operation(summary = "Obtener factura por ID", description = "Devuelve una factura específica basado en su ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Factura encontrada"),
+            @ApiResponse(responseCode = "404", description = "Factura no encontrada")
+    })
+    public ResponseEntity<Receipt> getReceiptById(@PathVariable @Parameter(description = "ID de la factura") String id) {
         Receipt receipt = receiptService.findById(id);
         if (receipt != null) {
             return new ResponseEntity<>(receipt, HttpStatus.OK);
@@ -53,8 +70,14 @@ public class ReceiptController {
         }
     }
 
+    //Buscar Receipt con orderNumber
     @GetMapping("/order/{orderId}")
-    public ResponseEntity<Receipt> getReceiptByOrderId(@PathVariable String orderId) {
+    @Operation(summary = "Obtener factura por ID de una orde especifica", description = "Devuelve una factura específica basado en el ID de su orden.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Factura encontrada"),
+            @ApiResponse(responseCode = "404", description = "Factura no encontrada")
+    })
+    public ResponseEntity<Receipt> getReceiptByOrderId(@PathVariable @Parameter(description = "ID de la orden") String orderId) {
         Receipt receipt = receiptService.findByOrderId(orderId);
         if (receipt != null) {
             return new ResponseEntity<>(receipt, HttpStatus.OK);
@@ -65,19 +88,30 @@ public class ReceiptController {
 
     // Crear Receipt 
     @PostMapping
-    public ResponseEntity<Receipt> createReceipt(@RequestBody Receipt receipt) {
+    @Operation(summary = "Crear una nueva factura", description = "Crea una nueva factura con los datos proporcionados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Factura creada con éxito"),
+            @ApiResponse(responseCode = "400", description = "Datos inválidos")
+    })
+    public ResponseEntity<Receipt> createReceipt(@RequestBody @Parameter(description = "Datos de la factura a crear") Receipt receipt) {
         Receipt newReceipt = receiptService.save(receipt);
         return new ResponseEntity<>(newReceipt, HttpStatus.CREATED);
     }
     
+    //Generar PDF con receiptID
     @GetMapping("/{id}/pdf")
-    public ResponseEntity<byte[]> downloadReceiptPdf(@PathVariable String id) {
+    @Operation(summary = "Obtener PDF de Factura con ID", description = "Genera un PDF con la información de la Factura, se usa el ID de la Factura")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pdf de la Factura obtenido con éxito"),
+            @ApiResponse(responseCode = "404", description = "Factura no encontrada")
+    })
+    public ResponseEntity<byte[]> downloadReceiptPdf(@PathVariable @Parameter(description = "ID de la Factura que se quiere descargar") String id) {
         Receipt receipt = receiptService.findById(id);
         if (receipt == null) {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        byte[] pdfBytes = pdfService.generateReceiptPdf(receipt);
+        byte[] pdfBytes = receiptService.generateReceiptPdf(receipt);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);

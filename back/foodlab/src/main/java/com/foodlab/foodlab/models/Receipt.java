@@ -11,8 +11,8 @@ import java.util.UUID;
  * @author BryanVanegas
  */
 public class Receipt {
-    
-private String idReceipt;
+
+    private String idReceipt;
     private String date;
     private final double delivery = 3.000;
     private double discount;
@@ -21,7 +21,7 @@ private String idReceipt;
 
     public Receipt(Order order) {
         this.idReceipt = UUID.randomUUID().toString();
-        
+
         this.order = order;
 
         this.date = order.getDate();
@@ -30,7 +30,7 @@ private String idReceipt;
     }
 
     public final double calculateDiscount(Order order) {
-        if (order.getProducts().size() > 2) {
+        if (order.getProducts().size() > 4) {
             return 0.05;
         }
         return 0;
@@ -86,4 +86,3 @@ private String idReceipt;
     }
 
 }
-
