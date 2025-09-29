@@ -33,7 +33,7 @@ public class ReceiptService {
 
     @Autowired
 
-    public ReceiptService(ReceiptRepository receiptRepo, ProductoService prodServ) {
+    public ReceiptService(ReceiptRepository receiptRepo) {
         this.receiptRepo = receiptRepo;
         initSampleData();
     }
