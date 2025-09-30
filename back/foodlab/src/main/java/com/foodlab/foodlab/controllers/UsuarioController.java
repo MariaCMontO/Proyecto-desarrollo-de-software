@@ -6,6 +6,11 @@ package com.foodlab.foodlab.controllers;
 
 import com.foodlab.foodlab.models.Usuario;
 import com.foodlab.foodlab.services.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/foodlab/usuarios")
+@Tag(name = "Usuarios", description = "API para la gestion de usuarios")
 @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE})
 /*
 // URL:  localhost:8080/foodlab/usuarios 
@@ -65,26 +71,47 @@ public class UsuarioController {
     }
     
     @GetMapping
+    @Operation(summary = "Obtiene todos los usuarios registrados", description = "Devuelve en una lista todos los usuarios registrados")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lista de usuarios obtenida con exito"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     public ResponseEntity<List<Usuario>> getAllUsuarios() {
         List<Usuario> usuarios = usuarioService.findAll();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
     
     @GetMapping("/buscar")
-    public ResponseEntity<List<Usuario>> getUsuariosByQuery(@RequestParam String nombre) {
+    @Operation(summary = "Buscar usuarios por nombre", description = "Buscar todos los usuarios por ese nombre completo o parcial")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuarios encontrados con exito"),
+        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado con ese nombre")
+    })
+    public ResponseEntity<List<Usuario>> getUsuariosByQuery(
+            @Parameter(description = "Nombre del usuario a buscar") @RequestParam String nombre) {
         List<Usuario> usuarios = usuarioService.findByNombre(nombre);
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
     
     @GetMapping("/cabecera")
-    public ResponseEntity<String> getAgentInfo(@RequestHeader("User-Agent") String userAgent) {
+    @Operation(summary = "Obtiene informacion del cliente desde el header User-Agent", description = "Obtiene informacion del cliente que esta en la cabecera")
+    @ApiResponse(responseCode = "200", description = "Informacion obtenida con exito")
+    public ResponseEntity<String> getAgentInfo(
+            @Parameter(description = "Header User-Agent del cliente") @RequestHeader("User-Agent") String userAgent) {
         String info = "Información del cliente (User-Agent): " + userAgent;
         return new ResponseEntity<>(info, HttpStatus.OK);
     }
     
     //Filtrar por email y contrasenia
     @GetMapping("/login")
-    public ResponseEntity<Usuario> getUsuarioByEmailAndPassword (@RequestParam(required = true) String email, @RequestParam(required = true) String password) {
+    @Operation(summary = "Buscar usuario por email y contraseña", description = "Buscar un usuario en especifico por su email y contraseña")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuario encontrado con exito"),
+        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
+    })
+    public ResponseEntity<Usuario> getUsuarioByEmailAndPassword (
+            @Parameter(description = "Email del usuario a buscar") @RequestParam(required = true) String email, 
+            @Parameter(description = "Contraseña del usuario a buscar") @RequestParam(required = true) String password) {
         Usuario usuario = usuarioService.findByEmailAndPassword(email, password);
         if (usuario != null) {
             return new ResponseEntity<>(usuario, HttpStatus.OK);
@@ -94,7 +121,13 @@ public class UsuarioController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable String id) {
+    @Operation(summary = "Buscar usuario por ID", description = "Buscar un usuario en especifico por su ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuario encontrado con exito"),
+        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado con exito")
+    })
+    public ResponseEntity<Usuario> getUsuarioById(
+            @Parameter(description = "ID del usuario a buscar") @PathVariable String id) {
         Usuario usuario = usuarioService.findById(id);
         if (usuario != null) {
             return new ResponseEntity<>(usuario, HttpStatus.OK);
@@ -104,14 +137,26 @@ public class UsuarioController {
     }
     
     @PostMapping
-    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
+    @Operation(summary = "Registrar un nuevo usuario", description = "Crear un nuevo usuario para guadarlo")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuario registrado exitosamente"),
+        @ApiResponse(responseCode = "400", description = "Datos invalidos")
+    })
+    public ResponseEntity<Usuario> createUsuario(
+            @Parameter(description = "Datos del nuevo usuario") @RequestBody Usuario usuario) {
         Usuario newUsuario = usuarioService.save(usuario);
         return new ResponseEntity<>(newUsuario, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable String id,
-            @RequestBody Usuario usuario) {
+    @Operation(summary = "Actualizar los datos de un usuario", description = "Actualizar todos los datos de un usuario")
+    @ApiResponses(value={
+        @ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente"),
+        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
+    })
+    public ResponseEntity<Usuario> updateUsuario(
+            @Parameter(description = "ID del usuario a actualizar") @PathVariable String id,
+            @Parameter(description = "Datos actualizados del usuario") @RequestBody Usuario usuario) {
         Usuario existingUsuario = usuarioService.findById(id);
         if (existingUsuario != null) {
             usuario.setId(id);
@@ -123,8 +168,14 @@ public class UsuarioController {
     }
     
     @PatchMapping("/{id}")
-    public ResponseEntity<Usuario> patchUpdateUsuario(@PathVariable String id,
-            @RequestBody Map<String, Object> updates) {
+    @Operation(summary = "Actualizar los datos de un usuario", description = "Actualizar parcialmente algunos datos del usuario")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Datos actualizados parcialmente exitosamente"),
+        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
+    })
+    public ResponseEntity<Usuario> patchUpdateUsuario(
+            @Parameter(description = "ID del usuario a actualizar") @PathVariable String id,
+            @Parameter(description = "Datos actualizados del usuario") @RequestBody Map<String, Object> updates) {
         Usuario updatedUsuario = usuarioService.patch(id, updates);
         if (updatedUsuario != null) {
             return new ResponseEntity<>(updatedUsuario, HttpStatus.OK);
@@ -134,7 +185,13 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUsuario(@PathVariable String id) {
+    @Operation(summary = "Eliminar un usuario", description = "Eliminar un usuario en especifico por su ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuario eliminado exitosamente"),
+        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
+    })
+    public ResponseEntity<Void> deleteUsuario(
+            @Parameter(description = "ID del usuario a eliminar") @PathVariable String id) {
         Usuario existingUsuario = usuarioService.findById(id);
         if (existingUsuario != null) {
             usuarioService.deleteById(id);
