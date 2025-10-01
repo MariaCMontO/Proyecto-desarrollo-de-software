@@ -35,7 +35,10 @@ public class UsuarioService {
     }
 
     private void initSampleData() {
-        save(new Usuario("1", "Messi", "messi@eam.com", "123", "3285410320", "Armenia", "admin"));
+        Usuario user1 = new Usuario("1", "Messi", "messi@eam.com", "123", "3285410320", "Armenia", "admin");
+        MetodoPago metP = new MetodoPago("Tarjeta de Credito", 1234456654321L, "Visa", 1234L);
+        user1.setMetodoPago(metP);
+        save(user1);
         save(new Usuario("2", "Cristiano", "cristiano@eam.com", "356", "3151982551", "Bogota", "cliente"));
         save(new Usuario("3", "Neymar", "neymar@eam.com", "789", "3368273083", "Cali", "cliente"));
     }

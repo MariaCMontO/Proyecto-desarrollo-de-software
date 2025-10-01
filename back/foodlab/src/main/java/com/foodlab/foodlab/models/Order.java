@@ -1,4 +1,4 @@
-/*
+   /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -79,7 +79,7 @@ public class Order {
     
     public void calcularTotal() {
         double total=products.stream()
-                .mapToDouble(pro -> pro.getProductos().getPrecio() * pro.getCantidad())
+                .mapToDouble(pro -> pro.getPrecioTotal())
                 .reduce(0, (a, b) -> a + b);
         this.total=total;
         
