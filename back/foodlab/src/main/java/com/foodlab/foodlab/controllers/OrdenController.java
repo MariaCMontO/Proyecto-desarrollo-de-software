@@ -13,6 +13,11 @@ import com.foodlab.foodlab.models.Usuario;
 import com.foodlab.foodlab.services.OrdenService;
 import com.foodlab.foodlab.services.ProductoService;
 import com.foodlab.foodlab.services.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/foodlab/ordenes")
+@Tag(name="Ordenes", description = "API para la gestion de ordenes")
 public class OrdenController {
 
     @Autowired
@@ -45,22 +51,43 @@ public class OrdenController {
     private ProductoService productoService;
 
     @GetMapping
+    @Operation(summary = "Obtener todas las ordenes", description = "Devuelve una lista con todas las ordenes y su informacion")
+    @ApiResponses(value={
+        @ApiResponse(responseCode = "200", description = "Lista de ordenes obtenida con exito"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     public ResponseEntity<List<Order>> obtenerOrdenes() {
         return new ResponseEntity<>(ordenService.getAllOrder(), HttpStatus.OK);
     }
     
     @GetMapping("/{idUser}")
-    public ResponseEntity<List<Order>> obtenerOrdenesPorUsuario(@PathVariable String idUser) {
+    @Operation(summary = "Obtener las ordenes de un cliente", description = "Obtener una lista de las ordenes de un cliente en especifico")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lista de ordenes obtenida con exito"),
+        @ApiResponse(responseCode = "404", description = "Cliente NO encontrado")
+    })
+    public ResponseEntity<List<Order>> obtenerOrdenesPorUsuario(
+            @Parameter(description = "ID del cliente para buscar sus ordenes") @PathVariable String idUser) {
         return new ResponseEntity<>(ordenService.getOrdenByUser(idUser), HttpStatus.OK);
     }
     
     @PatchMapping("/{idOrden}")
-    public ResponseEntity<Order> updateOrderState(@PathVariable String idOrden, @RequestParam(required = true) String estado) {
+    @Operation(summary = "Actualizar estado de la orden", description = "Actualizar el estado parcialmente de la orden")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Estado de la orden actualizado con exito"),
+        @ApiResponse(responseCode = "404", description = "Orden NO encontrada")
+    })
+    public ResponseEntity<Order> updateOrderState(
+            @Parameter(description = "ID de la orden a actualizar") @PathVariable String idOrden, 
+            @Parameter(description = "Nuevo estado de la orden") @RequestParam(required = true) String estado) {
         return new ResponseEntity<>(ordenService.updateOrderState(idOrden, estado), HttpStatus.CREATED);
     }
     
     @PostMapping
-    public ResponseEntity<Order> añadirOrden(@RequestBody OrdenRequestDTO ordenRequest) {
+    @Operation(summary="Añadir una orden", description = "Añadir una nueva orden con los productos proporcionados")
+    @ApiResponse(responseCode = "200", description = "Se añadio correctamente la orden")
+    public ResponseEntity<Order> añadirOrden(
+            @Parameter(description = "La orden nueva para guardarla") @RequestBody OrdenRequestDTO ordenRequest) {
 
 //        Recibimos la orden como:
 //        userId:1232,

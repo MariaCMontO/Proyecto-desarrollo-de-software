@@ -38,25 +38,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/foodlab/usuarios")
 @Tag(name = "Usuarios", description = "API para la gestion de usuarios")
 @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE})
-/*
-// URL:  localhost:8080/foodlab/usuarios 
------Anotaciones @-----
-@RestController - Significa que esta clase va a manejar peticiones HTTP y devolvera directamente los datos (En formato JSON), no vistas HTML.
-@RequestMapping("/api/usuarios") - Significa que esta es la ruta raiz para todas las peticiones que maneja este controlador.
-@Autowired - Esta anotación le dice a Spring que debe inyectar automáticamente una instancia.
-@GetMapping - Es una anotación que indica que este método debe responder a peticiones GET en una ruta específica (Por defecto la ruta raiz).
-@GetMapping("/buscar") - Es una anotación que indica que este método debe responder a una peticion GET por la ruta de consulta dependiendo el parametro de consulta.
-@RequestParam - Permite vincular un parámetro de la solicitud HTTP con un argumento de un método en tu controlador.
-@GetMapping("/cabecera") - Es una anotación que indica que este método debe responder a una peticion GET y devolvera la cabecera.
-@RequestHeader - Vincula el valor de un header HTTP directamente a un parametro de un metodo en el controlador.
-@GetMapping("/{id}") - Es una anotación que indica que este método debe responder a una peticion GET por un usuario en este caso dependiendo del id.
-@PathVariable - Se utiliza para extraer valores directamente de la URL y pasarlos como argumentos a un metodo del controlador.
-@PostMapping - Es una anotación que indica que este método debe responder a una peticion POST para crear un nuevo usuario.
-@PutMapping - Es una notacion que indica que este metodo debe responder a una peticion PUT para actualizar un usuario existente (reemplazo completo).
-@RequestBody - Esta anotación indica que el objeto usuario se construye a partir del cuerpo de la solicitud HTTP, generalmente en formato JSON.
-@PatchMapping - Se utiliza para manejar peticiones HTTP PATCH , que estan diseñadas para realizar actualizaciones parciales sobre un curso existente.
-@DeleteMapping - Se utiliza para manejar peticiones HTTP DELETE , que sirven para eliminar recursos.
-*/
 /**
  *
  * @author MATEO
