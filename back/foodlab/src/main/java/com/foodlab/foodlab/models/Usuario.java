@@ -33,6 +33,9 @@ public class Usuario {
         this.celular = celular;
         this.direccion = direccion;
         this.tipo=tipo;
+        this.ingredientes="";
+        this.restricciones="";
+        this.expectativas="";
         this.metodoPago=new MetodoPago("",0l , "", 0l);
     }
     

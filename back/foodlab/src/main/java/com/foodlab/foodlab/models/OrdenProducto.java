@@ -15,11 +15,13 @@ public class OrdenProducto {
     private Producto producto;
     private int cantidad;
     private String nota;
+    private double precioTotal;
 
     public OrdenProducto(Producto productos, int cantidad, String nota) {
         this.producto = productos;
         this.cantidad = cantidad;
         this.nota = nota;
+        calcularTotal();
     }
 
     public Producto getProductos() {
@@ -45,6 +47,18 @@ public class OrdenProducto {
     public void setNota(String nota) {
         this.nota = nota;
     }
+
+    public double getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(double precioTotal) {
+        this.precioTotal = precioTotal;
+    }
     
+    public void calcularTotal(){
+         double precio=this.producto.getPrecio()*this.cantidad;
+         this.precioTotal=precio;
+    }
     
 }
