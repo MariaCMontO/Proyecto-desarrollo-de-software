@@ -22,7 +22,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -128,6 +131,27 @@ public class OrdenController {
         //Guardamos en la base de datos
         ordenService.save(orden);
         return new ResponseEntity<>(orden, HttpStatus.CREATED);
+    }
+    
+    //Generar PDF con receiptID
+    @GetMapping("/{id}/pdf")
+    @Operation(summary = "Obtener PDF de Factura con ID", description = "Genera un PDF con la información de la Factura, se usa el ID de la Factura")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pdf de la Factura obtenido con éxito"),
+            @ApiResponse(responseCode = "404", description = "Factura no encontrada")
+    })
+    public ResponseEntity<byte[]> downloadReceiptPdf(@PathVariable @Parameter(description = "ID de la orden que se quiere descargar su factura") String id) {
+        Order orden = ordenService.getOrderById(id);
+        if (orden == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        byte[] pdfBytes = ordenService.generateReceiptPdf(orden);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDisposition(ContentDisposition.inline().filename("factura_" + id + ".pdf").build());
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
     
     
