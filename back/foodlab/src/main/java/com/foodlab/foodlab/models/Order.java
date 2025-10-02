@@ -19,6 +19,7 @@ public class Order {
     private ArrayList<OrdenProducto> products;
     private Usuario user;
     private String state;
+    private Receipt factura;
 
     public Order(String fecha, Usuario user) {
         this.idOrder = UUID.randomUUID().toString();
@@ -76,7 +77,14 @@ public class Order {
         this.state = state;
     }
 
-    
+    public Receipt getFactura() {
+        return factura;
+    }
+
+    public void setFactura(Receipt factura) {
+        this.factura = factura;
+    }
+
     public void calcularTotal() {
         double total=products.stream()
                 .mapToDouble(pro -> pro.getPrecioTotal())

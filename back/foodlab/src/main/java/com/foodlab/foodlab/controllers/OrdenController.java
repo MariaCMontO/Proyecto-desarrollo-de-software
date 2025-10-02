@@ -9,6 +9,7 @@ import com.foodlab.foodlab.dtos.OrdenRequestDTO;
 import com.foodlab.foodlab.models.OrdenProducto;
 import com.foodlab.foodlab.models.Order;
 import com.foodlab.foodlab.models.Producto;
+import com.foodlab.foodlab.models.Receipt;
 import com.foodlab.foodlab.models.Usuario;
 import com.foodlab.foodlab.services.OrdenService;
 import com.foodlab.foodlab.services.ProductoService;
@@ -120,6 +121,9 @@ public class OrdenController {
         
         // 4. Calcular total
         orden.calcularTotal();
+        
+        // 5. Generar factura
+        orden.setFactura(new Receipt(orden));
 
         //Guardamos en la base de datos
         ordenService.save(orden);

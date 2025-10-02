@@ -4,6 +4,7 @@
  */
 package com.foodlab.foodlab.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.UUID;
 
 /**
@@ -17,13 +18,12 @@ public class Receipt {
     private final double delivery = 3.000;
     private double discount;
     private double total;
+     @JsonIgnore
     private Order order;
 
     public Receipt(Order order) {
         this.idReceipt = UUID.randomUUID().toString();
-
         this.order = order;
-
         this.date = order.getDate();
         this.discount = calculateDiscount(order);
         this.total = calculateTotal(order);

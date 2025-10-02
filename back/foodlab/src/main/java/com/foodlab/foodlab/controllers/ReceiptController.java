@@ -4,14 +4,8 @@
  */
 package com.foodlab.foodlab.controllers;
 
-import com.foodlab.foodlab.models.Receipt;
-import com.foodlab.foodlab.services.ReceiptService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.foodlab.foodlab.models.Receipt;
+import com.foodlab.foodlab.services.ReceiptService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  *
@@ -42,7 +45,6 @@ public class ReceiptController {
     }
 
     //Obtener todas las facturas
-    
     @GetMapping
     @Operation(summary = "Obtener todas las facturas", description = "Devuelve una lista con todas las facturas y la informacion contenida en ellas (orden, usuario).")
     @ApiResponses(value = {
