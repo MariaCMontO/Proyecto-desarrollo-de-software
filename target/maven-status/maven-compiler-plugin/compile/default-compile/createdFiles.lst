@@ -1,0 +1,5 @@
+service\MensajeService.class
+modelo\Mensaje.class
+controller\MensajeController.class
+repository\MensajeRepository.class
+com\mycompany\foodlab\FoodLabApplication.class
