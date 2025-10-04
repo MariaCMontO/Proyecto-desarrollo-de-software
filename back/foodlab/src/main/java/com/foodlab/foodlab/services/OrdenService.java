@@ -58,6 +58,7 @@ public class OrdenService {
     }
     
     public byte[] generateReceiptPdf(Order orden) {
+        System.out.println("Si esta generando la factura");
         Receipt receipt=orden.getFactura();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document document = new Document() {
@@ -96,7 +97,7 @@ public class OrdenService {
             Paragraph p4 = new Paragraph("Fecha: " + receipt.getDate());
             p4.setAlignment(Element.ALIGN_CENTER);
             document.add(p4);
-            Paragraph p5 = new Paragraph("Método de Pago: " + receipt.getOrder().getUser().getMetodoPago().getNombreTarjeta());
+            Paragraph p5 = new Paragraph("Método de Pago: " + receipt.getOrder().getUser().getMetodoPago().getMetodo());
             p5.setAlignment(Element.ALIGN_CENTER);
             document.add(p5);
 
@@ -104,7 +105,7 @@ public class OrdenService {
             Paragraph p6 = new Paragraph("Últimos 4 digitos: " + numCard.substring((numCard.length() - 4), numCard.length()));
             p6.setAlignment(Element.ALIGN_CENTER);
             document.add(p6);
-            Paragraph p7 = new Paragraph("Tipo: " + receipt.getOrder().getUser().getMetodoPago().getNombreTarjeta());
+            Paragraph p7 = new Paragraph("Nombre en tarjeta: " + receipt.getOrder().getUser().getMetodoPago().getNombreTarjeta());
             p7.setAlignment(Element.ALIGN_CENTER);
             document.add(p7);
 

@@ -15,7 +15,7 @@ public class Receipt {
 
     private String idReceipt;
     private String date;
-    private final double delivery = 3.000;
+    private final double delivery =5000;
     private double discount;
     private double total;
      @JsonIgnore

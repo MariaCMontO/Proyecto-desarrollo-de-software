@@ -146,11 +146,11 @@ public class OrdenController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         byte[] pdfBytes = ordenService.generateReceiptPdf(orden);
-
+        
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDisposition(ContentDisposition.inline().filename("factura_" + id + ".pdf").build());
-
+        
         return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
     
