@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author BryanVanegas
  */
 @RestController
-@RequestMapping("/foodlab/productos")
+@RequestMapping("/api/foodlab/productos")
 @Tag(name = "Productos", description = "API para la gestion de productos")
 @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE})
 
@@ -87,7 +88,7 @@ public class ProductoController {
         @ApiResponse(responseCode = "404", description = "Producto NO encontrado")
     })
     public ResponseEntity<Producto> getProductoById(
-            @Parameter(description = "ID del producto a buscar") @PathVariable String idProducto) {
+            @Parameter(description = "ID del producto a buscar") @PathVariable Integer idProducto) {
         Producto producto = productoService.findById(idProducto);
         if (producto != null) {
             return new ResponseEntity<>(producto, HttpStatus.OK);
@@ -116,11 +117,11 @@ public class ProductoController {
         @ApiResponse(responseCode = "404", description = "Producto NO encontrado")
     })
     public ResponseEntity<Producto> updateProducto(
-            @Parameter(description = "ID del producto a actualizar") @PathVariable String idProducto, 
+            @Parameter(description = "ID del producto a actualizar") @PathVariable Integer idProducto,
             @Parameter(description = "Datos actualizados del producto") @RequestBody Producto producto) {
         Producto existingProducto = productoService.findById(idProducto);
         if (existingProducto != null) {
-            producto.setId(idProducto);
+            producto.setIdProducto(idProducto);
             Producto updatedUsuario = productoService.update(producto);
             return new ResponseEntity<>(updatedUsuario, HttpStatus.OK);
         } else {
@@ -135,7 +136,7 @@ public class ProductoController {
         @ApiResponse(responseCode = "404", description = "Producto NO encontrado")
     })
     public ResponseEntity<Producto> patchUpdateProducto(
-            @Parameter(description = "ID del producto a actualizar") @PathVariable String idProducto, 
+            @Parameter(description = "ID del producto a actualizar") @PathVariable Integer idProducto,
             @Parameter(description = "Datos actualizados del producto") @RequestBody Map<String, Object> updates) {
         Producto updatedProducto = productoService.patch(idProducto, updates);
         if (updatedProducto != null) {
@@ -152,7 +153,7 @@ public class ProductoController {
         @ApiResponse(responseCode = "404", description = "Producto NO encontrado")
     })
     public ResponseEntity<Void> deleteProducto(
-            @Parameter(description = "ID del usuario a eliminar") @PathVariable String idProducto) {
+            @Parameter(description = "ID del usuario a eliminar") @PathVariable Integer idProducto) {
         Producto existingUsuario = productoService.findById(idProducto);
         if (existingUsuario != null) {
             productoService.deleteById(idProducto);

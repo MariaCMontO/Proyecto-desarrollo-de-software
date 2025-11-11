@@ -4,49 +4,75 @@
  */
 package com.foodlab.foodlab.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+
 /**
  *
  * @author BryanVanegas
  */
+@Entity
+@Table(name = "metodos_pago")
 public class MetodoPago {
     
     // Atributos:
-    private String metodo;
-    private Long numero;
-    private String nombreTarjeta;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(nullable = false, unique = true)
+    private Long numeroTarjeta;
+    @Column(nullable = false)
+    private String tipoTarjeta;
+    @Column(nullable = false)
+    private String franquicia;
+    @Column(nullable = false)
     private Long cvv;
+
+    @OneToOne(mappedBy = "metodoPago")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "metodoPago"})
+    private Usuario usuario;
     
     // Constructor:
-    public MetodoPago(String metodo, Long numero, String nombreTarjeta, Long cvv) {
-        this.metodo = metodo;
-        this.numero = numero;
-        this.nombreTarjeta = nombreTarjeta;
+    public MetodoPago() {
+    }
+
+    public MetodoPago(Long numeroTarjeta, String tipoTarjeta, String franquicia, Long cvv) {
+        this.numeroTarjeta = numeroTarjeta;
+        this.tipoTarjeta = tipoTarjeta;
+        this.franquicia = franquicia;
         this.cvv = cvv;
     }
-    
-    // Getter y Setter:
-    public String getMetodo() {
-        return metodo;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setMetodo(String metodo) {
-        this.metodo = metodo;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Long getNumero() {
-        return numero;
+    public Long getNumeroTarjeta() {
+        return numeroTarjeta;
     }
 
-    public void setNumero(Long numero) {
-        this.numero = numero;
+    public void setNumeroTarjeta(Long numeroTarjeta) {
+        this.numeroTarjeta = numeroTarjeta;
     }
 
-    public String getNombreTarjeta() {
-        return nombreTarjeta;
+    public String getTipoTarjeta() {
+        return tipoTarjeta;
     }
 
-    public void setNombreTarjeta(String nombreTarjeta) {
-        this.nombreTarjeta = nombreTarjeta;
+    public void setTipoTarjeta(String tipoTarjeta) {
+        this.tipoTarjeta = tipoTarjeta;
+    }
+
+    public String getFranquicia() {
+        return franquicia;
+    }
+
+    public void setFranquicia(String franquicia) {
+        this.franquicia = franquicia;
     }
 
     public Long getCvv() {
@@ -57,10 +83,12 @@ public class MetodoPago {
         this.cvv = cvv;
     }
 
-    @Override
-    public String toString() {
-        return "MetodoPago{" + "metodo=" + metodo + ", numero=" + numero + ", nombreTarjeta=" + nombreTarjeta + ", cvv=" + cvv + '}';
+    public Usuario getUsuario() {
+        return usuario;
     }
-    
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }
 

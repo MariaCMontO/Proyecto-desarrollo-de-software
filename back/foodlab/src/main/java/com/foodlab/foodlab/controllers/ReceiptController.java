@@ -32,7 +32,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @author BryanVanegas
  */
 @RestController
-@RequestMapping("/foodlab/receipts")
+@RequestMapping("api/foodlab/receipts")
 @Tag(name = "Facturas", description = "API para la gestión de las Facturas")
 
 public class ReceiptController {
@@ -63,7 +63,7 @@ public class ReceiptController {
             @ApiResponse(responseCode = "200", description = "Factura encontrada"),
             @ApiResponse(responseCode = "404", description = "Factura no encontrada")
     })
-    public ResponseEntity<Receipt> getReceiptById(@PathVariable @Parameter(description = "ID de la factura") String id) {
+    public ResponseEntity<Receipt> getReceiptById(@PathVariable @Parameter(description = "ID de la factura") Integer id) {
         Receipt receipt = receiptService.findById(id);
         if (receipt != null) {
             return new ResponseEntity<>(receipt, HttpStatus.OK);
@@ -79,7 +79,7 @@ public class ReceiptController {
             @ApiResponse(responseCode = "200", description = "Factura encontrada"),
             @ApiResponse(responseCode = "404", description = "Factura no encontrada")
     })
-    public ResponseEntity<Receipt> getReceiptByOrderId(@PathVariable @Parameter(description = "ID de la orden") String orderId) {
+    public ResponseEntity<Receipt> getReceiptByOrderId(@PathVariable @Parameter(description = "ID de la orden") Integer orderId) {
         Receipt receipt = receiptService.findByOrderId(orderId);
         if (receipt != null) {
             return new ResponseEntity<>(receipt, HttpStatus.OK);
@@ -107,7 +107,7 @@ public class ReceiptController {
             @ApiResponse(responseCode = "200", description = "Pdf de la Factura obtenido con éxito"),
             @ApiResponse(responseCode = "404", description = "Factura no encontrada")
     })
-    public ResponseEntity<byte[]> downloadReceiptPdf(@PathVariable @Parameter(description = "ID de la Factura que se quiere descargar") String id) {
+    public ResponseEntity<byte[]> downloadReceiptPdf(@PathVariable @Parameter(description = "ID de la Factura que se quiere descargar") Integer id) {
         Receipt receipt = receiptService.findById(id);
         if (receipt == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

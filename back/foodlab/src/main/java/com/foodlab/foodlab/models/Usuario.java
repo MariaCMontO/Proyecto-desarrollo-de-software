@@ -4,47 +4,72 @@
  */
 package com.foodlab.foodlab.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+
+import java.util.List;
+
 /**
  *
  * @author BryanVanegas
  */
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
     
     // Atributos:
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String contrasenia;
+    @Column
     private String celular;
+    @Column
     private String direccion;
-    private String tipo;
-    private String ingredientes;
-    private String restricciones;
-    private String expectativas;
-    private String comidaFavorita;
+    @Column
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String tipo = "CLIENTE";
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "user", "factura", "products"})
+    private List<Order> ordenes;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "metodo_pago_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "usuario"})
     private MetodoPago metodoPago;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "preferencia_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "usuario"})
+    private Preferencia preferencia;
     
     // Constructor:
-    public Usuario(String id, String nombre, String email, String contrasenia, String celular, String direccion, String tipo) {
-        this.id = id;
+    public Usuario() {
+    }
+
+    public Usuario(String nombre, String email, String contrasenia, String celular, String direccion, String tipo) {
         this.nombre = nombre;
         this.email = email;
         this.contrasenia = contrasenia;
         this.celular = celular;
         this.direccion = direccion;
-        this.tipo=tipo;
-        this.ingredientes="";
-        this.restricciones="";
-        this.expectativas="";
-        this.metodoPago=new MetodoPago("",0l , "", 0l);
+        this.tipo = tipo;
+
     }
-    
-    // Getter y Setter:
-    public String getId() {
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -96,44 +121,27 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-    public String getIngredientes() {
-        return ingredientes;
+    public List<Order> getOrdenes() {
+        return ordenes;
     }
 
-    public void setIngredientes(String ingredientes) {
-        this.ingredientes = ingredientes;
-    }
-
-    public String getRestricciones() {
-        return restricciones;
-    }
-
-    public void setRestricciones(String restricciones) {
-        this.restricciones = restricciones;
-    }
-
-    public String getExpectativas() {
-        return expectativas;
-    }
-
-    public void setExpectativas(String expectativas) {
-        this.expectativas = expectativas;
-    }
-
-    public String getComidaFavorita() {
-        return comidaFavorita;
-    }
-
-    public void setComidaFavorita(String comidaFavorita) {
-        this.comidaFavorita = comidaFavorita;
+    public void setOrdenes(List<Order> ordenes) {
+        this.ordenes = ordenes;
     }
 
     public MetodoPago getMetodoPago() {
         return metodoPago;
     }
 
-    public void setMetodoPago(MetodoPago MetodoPago) {
-        this.metodoPago = MetodoPago;
+    public void setMetodoPago(MetodoPago metodoPago) {
+        this.metodoPago = metodoPago;
     }
-    
+
+    public Preferencia getPreferencia() {
+        return preferencia;
+    }
+
+    public void setPreferencia(Preferencia preferencia) {
+        this.preferencia = preferencia;
+    }
 }

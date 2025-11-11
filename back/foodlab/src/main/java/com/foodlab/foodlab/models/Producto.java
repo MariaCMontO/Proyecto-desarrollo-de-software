@@ -4,27 +4,37 @@
  */
 package com.foodlab.foodlab.models;
 
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 
 /**
  *
  * @author BryanVanegas
  */
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Entity
+@Table(name = "productos")
 public class Producto {
 
-    private String idProducto;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idProducto;
+    @Column(nullable = false)
     private String categoria;
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
     private String descripcion;
+    @Column(nullable = false)
     private double precio;
+    @Column
     private String imagen;
 
     public Producto() {
-        this.idProducto = UUID.randomUUID().toString();
+
     }
 
     public Producto(String categoria, String nombre, String descripcion, double precio, String imagen) {
-        this.idProducto=UUID.randomUUID().toString();
         this.categoria = categoria;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -32,20 +42,12 @@ public class Producto {
         this.imagen=imagen;
     }
 
-    public String getIdProducto() {
+    public Integer getIdProducto() {
         return idProducto;
     }
 
-    public void setId(String id) {
-        this.idProducto = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setIdProducto(Integer idProducto) {
+        this.idProducto = idProducto;
     }
 
     public String getCategoria() {
@@ -54,6 +56,14 @@ public class Producto {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDescripcion() {
@@ -72,10 +82,6 @@ public class Producto {
         this.precio = precio;
     }
 
-    public Producto(String imagen) {
-        this.imagen = imagen;
-    }
-
     public String getImagen() {
         return imagen;
     }
@@ -83,6 +89,4 @@ public class Producto {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
-
-    
 }

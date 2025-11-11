@@ -6,30 +6,55 @@
 package com.foodlab.foodlab.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+
 /**
  *
  * @author camim
  */
+@Entity
+@Table(name = "orden_producto")
 public class OrdenProducto {
 
-    private Producto producto;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(nullable = false)
+    private double precio;
+    @Column(nullable = false)
     private int cantidad;
+    @Column
     private String nota;
-    private double precioTotal;
 
-    public OrdenProducto(Producto productos, int cantidad, String nota) {
-        this.producto = productos;
-        this.cantidad = cantidad;
-        this.nota = nota;
-        calcularTotal();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "producto_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Producto producto;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "products", "user", "factura"})
+    private Order order;
+
+    public OrdenProducto() {
     }
 
-    public Producto getProductos() {
-        return producto;
+    public Integer getId() {
+        return id;
     }
 
-    public void setProductos(Producto productos) {
-        this.producto = productos;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public int getCantidad() {
@@ -48,17 +73,19 @@ public class OrdenProducto {
         this.nota = nota;
     }
 
-    public double getPrecioTotal() {
-        return precioTotal;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setPrecioTotal(double precioTotal) {
-        this.precioTotal = precioTotal;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
-    
-    public void calcularTotal(){
-         double precio=this.producto.getPrecio()*this.cantidad;
-         this.precioTotal=precio;
+
+    public Order getOrder() {
+        return order;
     }
-    
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }

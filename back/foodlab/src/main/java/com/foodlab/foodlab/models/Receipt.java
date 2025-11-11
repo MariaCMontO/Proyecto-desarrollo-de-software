@@ -4,56 +4,53 @@
  */
 package com.foodlab.foodlab.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 /**
  *
  * @author BryanVanegas
  */
+@Entity
+@Table(name = "facturas")
 public class Receipt {
 
-    private String idReceipt;
-    private String date;
-    private final double delivery =5000;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idReceipt;
+    @Column(nullable = false)
+    private LocalDateTime date = LocalDateTime.now();
+    @Column(nullable = false)
+    private final double delivery = 5000;
+    @Column(nullable = false)
     private double discount;
+    @Column(nullable = false)
     private double total;
-     @JsonIgnore
+
+    @OneToOne(mappedBy = "factura")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "factura", "user", "products"})
     private Order order;
 
-    public Receipt(Order order) {
-        this.idReceipt = UUID.randomUUID().toString();
-        this.order = order;
-        this.date = order.getDate();
-        this.discount = calculateDiscount(order);
-        this.total = calculateTotal(order);
+    public Receipt() {
+
     }
 
-    public final double calculateDiscount(Order order) {
-        if (order.getProducts().size() > 4) {
-            return 0.05;
-        }
-        return 0;
-    }
-
-    public final double calculateTotal(Order order) {
-        return this.discount == 0 ? (this.order.getTotal() + this.delivery)
-                : ((this.order.getTotal() - (this.order.getTotal() * this.discount)) + this.delivery);
-    }
-
-    public String getIdReceipt() {
+    public Integer getIdReceipt() {
         return idReceipt;
     }
 
-    public void setIdReceipt(String idReceipt) {
+    public void setIdReceipt(Integer idReceipt) {
         this.idReceipt = idReceipt;
     }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -84,5 +81,4 @@ public class Receipt {
     public void setOrder(Order order) {
         this.order = order;
     }
-
 }

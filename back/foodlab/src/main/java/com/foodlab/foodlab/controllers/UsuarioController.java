@@ -13,6 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author BryanVanegas
  */
 @RestController
-@RequestMapping("/foodlab/usuarios")
+@RequestMapping("api/foodlab/usuarios")
 @Tag(name = "Usuarios", description = "API para la gestion de usuarios")
 @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE})
 /**
@@ -70,7 +72,7 @@ public class UsuarioController {
     })
     public ResponseEntity<List<Usuario>> getUsuariosByQuery(
             @Parameter(description = "Nombre del usuario a buscar") @RequestParam String nombre) {
-        List<Usuario> usuarios = usuarioService.findByNombre(nombre);
+        List<Usuario> usuarios = usuarioService.findByNombreContainingIgnoreCase(nombre);
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
     
@@ -85,15 +87,16 @@ public class UsuarioController {
     
     //Filtrar por email y contrasenia
     @GetMapping("/login")
-    @Operation(summary = "Buscar usuario por email y contraseña", description = "Buscar un usuario en especifico por su email y contraseña")
+    @Operation(summary = "Buscar usuario por email y contraseña.Hacer el login", description = "Buscar un usuario en especifico por su email y contraseña")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Usuario encontrado con exito"),
         @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
     })
-    public ResponseEntity<Usuario> getUsuarioByEmailAndPassword (
+    public ResponseEntity<Usuario> login (
             @Parameter(description = "Email del usuario a buscar") @RequestParam(required = true) String email, 
             @Parameter(description = "Contraseña del usuario a buscar") @RequestParam(required = true) String password) {
-        Usuario usuario = usuarioService.findByEmailAndPassword(email, password);
+
+        Usuario usuario = usuarioService.login(email, password);
         if (usuario != null) {
             return new ResponseEntity<>(usuario, HttpStatus.OK);
         } else {
@@ -108,10 +111,10 @@ public class UsuarioController {
         @ApiResponse(responseCode = "404", description = "Usuario NO encontrado con exito")
     })
     public ResponseEntity<Usuario> getUsuarioById(
-            @Parameter(description = "ID del usuario a buscar") @PathVariable String id) {
-        Usuario usuario = usuarioService.findById(id);
-        if (usuario != null) {
-            return new ResponseEntity<>(usuario, HttpStatus.OK);
+            @Parameter(description = "ID del usuario a buscar") @PathVariable Integer id) {
+        Optional<Usuario> usuario = usuarioService.findById(id);
+        if (usuario.isPresent()) {
+            return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -136,10 +139,10 @@ public class UsuarioController {
         @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
     })
     public ResponseEntity<Usuario> updateUsuario(
-            @Parameter(description = "ID del usuario a actualizar") @PathVariable String id,
+            @Parameter(description = "ID del usuario a actualizar") @PathVariable Integer id,
             @Parameter(description = "Datos actualizados del usuario") @RequestBody Usuario usuario) {
-        Usuario existingUsuario = usuarioService.findById(id);
-        if (existingUsuario != null) {
+        Optional<Usuario> existingUsuario = usuarioService.findById(id);
+        if (existingUsuario.isPresent()) {
             usuario.setId(id);
             Usuario updatedUsuario = usuarioService.update(usuario);
             return new ResponseEntity<>(updatedUsuario, HttpStatus.OK);
@@ -155,7 +158,7 @@ public class UsuarioController {
         @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
     })
     public ResponseEntity<Usuario> patchUpdateUsuario(
-            @Parameter(description = "ID del usuario a actualizar") @PathVariable String id,
+            @Parameter(description = "ID del usuario a actualizar") @PathVariable Integer id,
             @Parameter(description = "Datos actualizados del usuario") @RequestBody Map<String, Object> updates) {
         Usuario updatedUsuario = usuarioService.patch(id, updates);
         if (updatedUsuario != null) {
@@ -172,10 +175,8 @@ public class UsuarioController {
         @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
     })
     public ResponseEntity<Void> deleteUsuario(
-            @Parameter(description = "ID del usuario a eliminar") @PathVariable String id) {
-        Usuario existingUsuario = usuarioService.findById(id);
-        if (existingUsuario != null) {
-            usuarioService.deleteById(id);
+            @Parameter(description = "ID del usuario a eliminar") @PathVariable Integer id) {
+        if (usuarioService.deleteById(id)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

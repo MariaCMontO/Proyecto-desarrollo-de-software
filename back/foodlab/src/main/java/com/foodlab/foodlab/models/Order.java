@@ -1,96 +1,106 @@
    /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.foodlab.foodlab.models;
+    * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+    * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+    */
+   package com.foodlab.foodlab.models;
 
-import java.util.ArrayList;
-import java.util.UUID;
+   import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+   import com.fasterxml.jackson.annotation.JsonProperty;
+   import jakarta.persistence.*;
 
-/**
- *
- * @author BryanVanegas
- */
-public class Order {
+   import java.time.LocalDateTime;
+   import java.util.ArrayList;
+   import java.util.List;
 
-    private String idOrder;
-    private String date;
-    private double total;
-    private ArrayList<OrdenProducto> products;
-    private Usuario user;
-    private String state;
-    private Receipt factura;
+   /**
+    *
+    * @author BryanVanegas
+    */
+   @Entity
+   @Table(name = "ordenes")
+   public class Order {
 
-    public Order(String fecha, Usuario user) {
-        this.idOrder = UUID.randomUUID().toString();
-        this.date = fecha;
-        this.products = new ArrayList<>();
-        this.user = user;
-        this.state="confirmada";
-    }
+       @Id
+       @GeneratedValue(strategy = GenerationType.IDENTITY)
+       private Integer idOrder;
+       @Column(nullable = false)
+       private LocalDateTime date = LocalDateTime.now();
+       @Column()
+       private String status = "PENDIENTE";
+       @Column
+       private double total;
 
-    public String getDate() {
-        return date;
-    }
+       @ManyToOne(fetch = FetchType.LAZY)
+       @JoinColumn(name = "usuario_id", nullable = false)
+       @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "ordenes", "metodoPago"})
+       private Usuario user;
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+       @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+       @JoinColumn(name = "factura_id")
+       @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "order"})
+       private Receipt factura;
 
-    public double getTotal() {
-        return total;
-    }
+       @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+       @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "order", "producto"})
+       private List<OrdenProducto> products;
 
-    public void setTotal(double total) {
-        this.total = total;
-    }
+       public Order() {
+       }
 
-    public ArrayList<OrdenProducto> getProducts() {
-        return products;
-    }
+       public Integer getIdOrder() {
+           return idOrder;
+       }
 
-    public void setProducts(ArrayList<OrdenProducto> products) {
-        this.products = products;
-    }
+       public void setIdOrder(Integer idOrder) {
+           this.idOrder = idOrder;
+       }
 
-    public String getIdOrder() {
-        return idOrder;
-    }
+       public LocalDateTime getDate() {
+           return date;
+       }
 
-    public void setIdOrder(String idOrder) {
-        this.idOrder = idOrder;
-    }
+       public void setDate(LocalDateTime date) {
+           this.date = date;
+       }
 
-    public Usuario getUser() {
-        return user;
-    }
+       public double getTotal() {
+           return total;
+       }
 
-    public void setUser(Usuario user) {
-        this.user = user;
-    }
+       public void setTotal(double total) {
+           this.total = total;
+       }
 
-    public String getState() {
-        return state;
-    }
+       public Usuario getUser() {
+           return user;
+       }
 
-    public void setState(String state) {
-        this.state = state;
-    }
+       public void setUser(Usuario user) {
+           this.user = user;
+       }
 
-    public Receipt getFactura() {
-        return factura;
-    }
+       public List<OrdenProducto> getProducts() {
+           return products;
+       }
 
-    public void setFactura(Receipt factura) {
-        this.factura = factura;
-    }
+       public void setProducts(List<OrdenProducto> products) {
+           this.products = products;
+       }
 
-    public void calcularTotal() {
-        double total=products.stream()
-                .mapToDouble(pro -> pro.getPrecioTotal())
-                .reduce(0, (a, b) -> a + b);
-        this.total=total;
-        
-    }
+       public Receipt getFactura() {
+           return factura;
+       }
 
-}
+       public void setFactura(Receipt factura) {
+           this.factura = factura;
+       }
+
+       public String getStatus() {
+           return status;
+       }
+
+       public void setStatus(String status) {
+           this.status = status;
+       }
+
+   }

@@ -5,18 +5,25 @@
 package com.foodlab.foodlab.services;
 
 import com.foodlab.foodlab.models.MetodoPago;
+import com.foodlab.foodlab.models.Preferencia;
 import com.foodlab.foodlab.models.Usuario;
-import com.foodlab.foodlab.repositories.UsuarioRepository;
+
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
+import com.foodlab.foodlab.repositories.MetodoPagoRepository;
+import com.foodlab.foodlab.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
  *
  * @author BryanVanegas
  */
-@Service // Se utiliza para marcar la clase como un componente de servicio , para que Spring la detecte automaticamente y pueda 
+@Service
+// Se utiliza para marcar la clase como un componente de servicio , para que Spring la detecte automaticamente y pueda
 // inyectarla en otras partes del sistema.
 
 /**
@@ -26,30 +33,46 @@ import org.springframework.stereotype.Service;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final MetodoPagoRepository metodoPagoRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired  //Motor de inyeccion de dependencias 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, MetodoPagoRepository metodoPagoRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
-        // Inicializamos algunos datos de ejemplo 
-        initSampleData();
+        this.metodoPagoRepository = metodoPagoRepository;
+        this.passwordEncoder = passwordEncoder;
+        // Inicializamos algunos datos de ejemplo
+        //initSampleData();
     }
 
     private void initSampleData() {
-        Usuario user1 = new Usuario("1", "Messi", "messi@eam.com", "123", "3285410320", "Armenia", "admin");
-        MetodoPago metP = new MetodoPago("Tarjeta de Credito", 1234456654321L, "Visa", 1234L);
-        user1.setMetodoPago(metP);
+        Usuario user1 = new Usuario("Messi", "messi@eam.com", "123", "3285410320", "Armenia", "ADMIN");
         save(user1);
-        save(new Usuario("2", "Cristiano", "cristiano@eam.com", "356", "3151982551", "Bogota", "cliente"));
-        save(new Usuario("3", "Neymar", "neymar@eam.com", "789", "3368273083", "Cali", "cliente"));
+
+        save(new Usuario("Neymar", "neymar@eam.com", "789", "3368273083", "Cali", "CLIENTE"));
+
+        Usuario cristiano = new Usuario("Cristiano", "cristiano@eam.com", "356", "3151982551", "Bogota", "CLIENTE");
+        MetodoPago metP = new MetodoPago(1234123412341234L, "Debito", "Visa", 1234L);
+        Preferencia pref = new Preferencia("cebolla, tomate", "Sin lechuga", "Recibir la comida caliente","hamburguesas");
+
+        cristiano.setMetodoPago(metP);
+        metP.setUsuario(cristiano);
+
+        cristiano.setPreferencia(pref);
+        pref.setUsuario(cristiano);
+
+        save(cristiano);
     }
 
     // Crear un nuevo usuario 
     public Usuario save(Usuario usuario) {
+        String passHashed = passwordEncoder.encode(usuario.getContrasenia());
+        usuario.setContrasenia(passHashed);
         return usuarioRepository.save(usuario);
     }
 
     // Obtener un usuario por ID 
-    public Usuario findById(String id) {
+    public Optional<Usuario> findById(Integer id) {
         return usuarioRepository.findById(id);
     }
 
@@ -59,60 +82,58 @@ public class UsuarioService {
     }
 
     // Buscar por nombre 
-    public List<Usuario> findByNombre(String nombre) {
-        return usuarioRepository.findByNombreContaining(nombre);
-    }
-    
-    // Filtrar por email y contrasenia
-    public Usuario findByEmailAndPassword (String email, String password) {
-        return usuarioRepository.findByEmailAndPassword(email, password);
+    public List<Usuario> findByNombreContainingIgnoreCase(String nombre) {
+        return usuarioRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
-    // Actualizar un usuario 
-    public Usuario update(Usuario usuario) {
-        return usuarioRepository.update(usuario);
+    // Filtrar por email
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("No se encontró"));
     }
 
-    // Actualización parcial 
-    public Usuario patch(String id, Map<String, Object> updates) {
-        Usuario usuario = usuarioRepository.findById(id);
-        if (usuario != null) {
-            updates.forEach((key, value) -> {
-                switch (key) {
-                    case "nombre":
-                        usuario.setNombre((String) value);
-                        break;
-                    case "email":
-                        usuario.setEmail((String) value);
-                        break;
-                    case "contrasenia":
-                        usuario.setContrasenia((String) value);
-                        break;
-                    case "celular":
-                        usuario.setCelular((String) value);
-                    case "direccion":
-                        usuario.setDireccion((String) value);
-                    case "tipo":
-                        usuario.setTipo((String) value);
-                    case "ingredientes":
-                        usuario.setIngredientes((String) value);
-                    case "restricciones":
-                        usuario.setRestricciones((String) value);
-                    case "expectativas":
-                        usuario.setExpectativas((String) value);
-                    case "comidaFavorita":
-                        usuario.setComidaFavorita((String) value);
-                    case "pago":
-                        usuario.setMetodoPago((MetodoPago) value);
-                }
-            });
-            return usuarioRepository.update(usuario);
+    public Usuario login(String email, String contrasenia) {
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario.isPresent()) {
+            boolean coincidencia = passwordEncoder.matches(contrasenia, usuario.get().getContrasenia());
+
+            if (!coincidencia) {
+                return null;
+            }
+            return usuario.get();
         }
         return null;
     }
 
-    // Eliminar un usuario 
-    public void deleteById(String id) {
-        usuarioRepository.deleteById(id);
+    // Actualizar un usuario 
+    public Usuario update(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
+    // Actualización parcial 
+    public Usuario patch(Integer id, Map<String, Object> updates) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        updates.forEach((key, value) -> {
+            switch (key) {
+                case "nombre" -> usuario.setNombre((String) value);
+                case "email" -> usuario.setEmail((String) value);
+                case "contrasenia" -> usuario.setContrasenia((String) value);
+                case "direccion" -> usuario.setDireccion((String) value);
+            }
+        });
+
+        return usuarioRepository.save(usuario);
+    }
+
+
+    // Eliminar un usuario
+    public boolean deleteById(Integer id) {
+        if (usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

@@ -5,9 +5,12 @@
 package com.foodlab.foodlab.services;
 
 import com.foodlab.foodlab.models.Producto;
-import com.foodlab.foodlab.repositories.ProductoRepository;
+
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
+import com.foodlab.foodlab.repositories.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +23,9 @@ public class ProductoService {
 
     private final ProductoRepository productoRepository;
 
-    @Autowired
     public ProductoService(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
-        initSampleData();
+        //initSampleData();
     }
 
     private void initSampleData() {
@@ -138,8 +140,8 @@ public class ProductoService {
     }
 
     // Obtener un usuario por IDProducto
-    public Producto findById(String idProducto) {
-        return productoRepository.findById(idProducto);
+    public Producto findById(Integer idProducto) {
+        return productoRepository.findById(idProducto).get();
     }
 
     // Listar todos los productos
@@ -149,43 +151,43 @@ public class ProductoService {
 
     // Buscar por nombre
     public List<Producto> findByNombre(String nombre) {
-        return productoRepository.findByNombreContaining(nombre);
+        return productoRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
     // Actualizar un producto
     public Producto update(Producto producto) {
-        return productoRepository.update(producto);
+        return productoRepository.save(producto);
     }
 
     // Actualización parcial
-    public Producto patch(String idProducto, Map<String, Object> updates) {
-        Producto producto = productoRepository.findById(idProducto);
-        if (producto != null) {
+    public Producto patch(Integer idProducto, Map<String, Object> updates) {
+        Optional<Producto> producto = productoRepository.findById(idProducto);
+        if (producto.isPresent()) {
             updates.forEach((key, value) -> {
                 switch (key) {
                     case "categoria":
-                        producto.setCategoria((String) value);
+                        producto.get().setCategoria((String) value);
                         break;
                     case "nombre":
-                        producto.setNombre((String) value);
+                        producto.get().setNombre((String) value);
                         break;
                     case "descripcion":
-                        producto.setDescripcion((String) value);
+                        producto.get().setDescripcion((String) value);
                         break;
                     case "precio":
-                        producto.setPrecio((Double) value);
+                        producto.get().setPrecio((Double) value);
                         break;
                     case "imagen":
-                        producto.setImagen((String) value);
+                        producto.get().setImagen((String) value);
                 }
             });
-            return productoRepository.update(producto);
+            return productoRepository.save(producto.get());
         }
         return null;
     }
 
     // Eliminar un producto
-    public void deleteById(String idProducto) {
+    public void deleteById(Integer idProducto) {
         productoRepository.deleteById(idProducto);
     }
 }
