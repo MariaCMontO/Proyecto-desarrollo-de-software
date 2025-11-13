@@ -33,7 +33,7 @@ public class OrdenService {
         this.productoService = productoService;
         this.usuarioService = usuarioService;
         this.receiptService = receiptService;
-        initSampleData();
+        //initSampleData();
     }
 
     private void initSampleData() {
@@ -47,7 +47,7 @@ public class OrdenService {
         productos.add(ordProdDTO3);
 
         OrdenRequestDTO orderReqDTO = new OrdenRequestDTO(3, productos);
-        //this.realizarPedido(orderReqDTO);
+        this.realizarPedido(orderReqDTO);
     }
 
     // El "CREATE" de Pedido es la lógica de negocio principal

@@ -4,6 +4,8 @@
  */
 package com.foodlab.foodlab.controllers;
 
+import com.foodlab.foodlab.dto.LoginRequestDTO;
+import com.foodlab.foodlab.dto.LoginResponseDTO;
 import com.foodlab.foodlab.models.Usuario;
 import com.foodlab.foodlab.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +13,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,6 +21,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,30 +56,30 @@ public class UsuarioController {
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
-    
+
     @GetMapping
     @Operation(summary = "Obtiene todos los usuarios registrados", description = "Devuelve en una lista todos los usuarios registrados")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Lista de usuarios obtenida con exito"),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            @ApiResponse(responseCode = "200", description = "Lista de usuarios obtenida con exito"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public ResponseEntity<List<Usuario>> getAllUsuarios() {
         List<Usuario> usuarios = usuarioService.findAll();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
-    
+
     @GetMapping("/buscar")
     @Operation(summary = "Buscar usuarios por nombre", description = "Buscar todos los usuarios por ese nombre completo o parcial")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Usuarios encontrados con exito"),
-        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado con ese nombre")
+            @ApiResponse(responseCode = "200", description = "Usuarios encontrados con exito"),
+            @ApiResponse(responseCode = "404", description = "Usuario NO encontrado con ese nombre")
     })
     public ResponseEntity<List<Usuario>> getUsuariosByQuery(
             @Parameter(description = "Nombre del usuario a buscar") @RequestParam String nombre) {
         List<Usuario> usuarios = usuarioService.findByNombreContainingIgnoreCase(nombre);
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
-    
+
     @GetMapping("/cabecera")
     @Operation(summary = "Obtiene informacion del cliente desde el header User-Agent", description = "Obtiene informacion del cliente que esta en la cabecera")
     @ApiResponse(responseCode = "200", description = "Informacion obtenida con exito")
@@ -84,31 +88,32 @@ public class UsuarioController {
         String info = "Información del cliente (User-Agent): " + userAgent;
         return new ResponseEntity<>(info, HttpStatus.OK);
     }
-    
-    //Filtrar por email y contrasenia
-    @GetMapping("/login")
+
+    //Login
+    @PostMapping("/login")
     @Operation(summary = "Buscar usuario por email y contraseña.Hacer el login", description = "Buscar un usuario en especifico por su email y contraseña")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Usuario encontrado con exito"),
-        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado con exito"),
+            @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
     })
-    public ResponseEntity<Usuario> login (
-            @Parameter(description = "Email del usuario a buscar") @RequestParam(required = true) String email, 
-            @Parameter(description = "Contraseña del usuario a buscar") @RequestParam(required = true) String password) {
+    public ResponseEntity<?> login(
+            @Parameter(description = "Email del usuario a buscar") @RequestBody LoginRequestDTO loginRequest) {
 
-        Usuario usuario = usuarioService.login(email, password);
-        if (usuario != null) {
-            return new ResponseEntity<>(usuario, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            LoginResponseDTO response = usuarioService.login(loginRequest);
+            // Si el login es exitoso, devuelve 200 OK con el token
+            return ResponseEntity.ok(response);
+        } catch (AuthenticationException e) {
+            // Si las credenciales son incorrectas, devuelve 401 Unauthorized
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error: Credenciales inválidas");
         }
     }
-    
+
     @GetMapping("/{id}")
     @Operation(summary = "Buscar usuario por ID", description = "Buscar un usuario en especifico por su ID")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Usuario encontrado con exito"),
-        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado con exito")
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado con exito"),
+            @ApiResponse(responseCode = "404", description = "Usuario NO encontrado con exito")
     })
     public ResponseEntity<Usuario> getUsuarioById(
             @Parameter(description = "ID del usuario a buscar") @PathVariable Integer id) {
@@ -119,12 +124,13 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
+    //Registro
     @PostMapping
     @Operation(summary = "Registrar un nuevo usuario", description = "Crear un nuevo usuario para guadarlo")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Usuario registrado exitosamente"),
-        @ApiResponse(responseCode = "400", description = "Datos invalidos")
+            @ApiResponse(responseCode = "200", description = "Usuario registrado exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Datos invalidos")
     })
     public ResponseEntity<Usuario> createUsuario(
             @Parameter(description = "Datos del nuevo usuario") @RequestBody Usuario usuario) {
@@ -134,9 +140,9 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar los datos de un usuario", description = "Actualizar todos los datos de un usuario")
-    @ApiResponses(value={
-        @ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente"),
-        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
     })
     public ResponseEntity<Usuario> updateUsuario(
             @Parameter(description = "ID del usuario a actualizar") @PathVariable Integer id,
@@ -150,12 +156,12 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
     @PatchMapping("/{id}")
     @Operation(summary = "Actualizar los datos de un usuario", description = "Actualizar parcialmente algunos datos del usuario")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Datos actualizados parcialmente exitosamente"),
-        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
+            @ApiResponse(responseCode = "200", description = "Datos actualizados parcialmente exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
     })
     public ResponseEntity<Usuario> patchUpdateUsuario(
             @Parameter(description = "ID del usuario a actualizar") @PathVariable Integer id,
@@ -171,8 +177,8 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar un usuario", description = "Eliminar un usuario en especifico por su ID")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Usuario eliminado exitosamente"),
-        @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
+            @ApiResponse(responseCode = "200", description = "Usuario eliminado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Usuario NO encontrado")
     })
     public ResponseEntity<Void> deleteUsuario(
             @Parameter(description = "ID del usuario a eliminar") @PathVariable Integer id) {

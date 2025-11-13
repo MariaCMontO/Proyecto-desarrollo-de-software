@@ -4,6 +4,9 @@
  */
 package com.foodlab.foodlab.services;
 
+import com.foodlab.foodlab.dto.LoginRequestDTO;
+import com.foodlab.foodlab.dto.LoginResponseDTO;
+import com.foodlab.foodlab.jwt.JwtService;
 import com.foodlab.foodlab.models.MetodoPago;
 import com.foodlab.foodlab.models.Preferencia;
 import com.foodlab.foodlab.models.Usuario;
@@ -15,6 +18,10 @@ import java.util.Optional;
 import com.foodlab.foodlab.repositories.MetodoPagoRepository;
 import com.foodlab.foodlab.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,13 +40,18 @@ import org.springframework.stereotype.Service;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-    private final MetodoPagoRepository metodoPagoRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtService jwtService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Autowired  //Motor de inyeccion de dependencias 
     public UsuarioService(UsuarioRepository usuarioRepository, MetodoPagoRepository metodoPagoRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
-        this.metodoPagoRepository = metodoPagoRepository;
         this.passwordEncoder = passwordEncoder;
         // Inicializamos algunos datos de ejemplo
         //initSampleData();
@@ -53,7 +65,7 @@ public class UsuarioService {
 
         Usuario cristiano = new Usuario("Cristiano", "cristiano@eam.com", "356", "3151982551", "Bogota", "CLIENTE");
         MetodoPago metP = new MetodoPago(1234123412341234L, "Debito", "Visa", 1234L);
-        Preferencia pref = new Preferencia("cebolla, tomate", "Sin lechuga", "Recibir la comida caliente","hamburguesas");
+        Preferencia pref = new Preferencia("cebolla, tomate", "Sin lechuga", "Recibir la comida caliente", "hamburguesas");
 
         cristiano.setMetodoPago(metP);
         metP.setUsuario(cristiano);
@@ -91,18 +103,20 @@ public class UsuarioService {
         return usuarioRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("No se encontró"));
     }
 
-    public Usuario login(String email, String contrasenia) {
-        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+    public LoginResponseDTO login(LoginRequestDTO loginRequest) throws AuthenticationException {
 
-        if (usuario.isPresent()) {
-            boolean coincidencia = passwordEncoder.matches(contrasenia, usuario.get().getContrasenia());
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getEmail(),
+                        loginRequest.getPassword()
+                )
+        );
 
-            if (!coincidencia) {
-                return null;
-            }
-            return usuario.get();
-        }
-        return null;
+        UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
+
+        String token = jwtService.generateToken(userDetails);
+
+        return new LoginResponseDTO(token);
     }
 
     // Actualizar un usuario 

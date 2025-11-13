@@ -1,6 +1,6 @@
-package pruebajpa.jwt;
+package com.foodlab.foodlab.jwt;
 
-import pruebajpa.services.UserDetailsServiceImpl;
+import com.foodlab.foodlab.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

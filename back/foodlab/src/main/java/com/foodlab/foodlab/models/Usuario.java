@@ -35,7 +35,7 @@ public class Usuario {
     private String direccion;
     @Column
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String tipo = "CLIENTE";
+    private String rol = "CLIENTE";
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "user", "factura", "products"})
@@ -55,13 +55,13 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nombre, String email, String contrasenia, String celular, String direccion, String tipo) {
+    public Usuario(String nombre, String email, String contrasenia, String celular, String direccion, String rol) {
         this.nombre = nombre;
         this.email = email;
         this.contrasenia = contrasenia;
         this.celular = celular;
         this.direccion = direccion;
-        this.tipo = tipo;
+        this.rol = rol;
 
     }
 
@@ -113,12 +113,12 @@ public class Usuario {
         this.direccion = direccion;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getRol() {
+        return rol;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public List<Order> getOrdenes() {
