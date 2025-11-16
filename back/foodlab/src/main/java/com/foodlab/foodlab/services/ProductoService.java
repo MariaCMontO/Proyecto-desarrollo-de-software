@@ -25,7 +25,7 @@ public class ProductoService {
 
     public ProductoService(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
-        //initSampleData();
+//        initSampleData();
     }
 
     private void initSampleData() {

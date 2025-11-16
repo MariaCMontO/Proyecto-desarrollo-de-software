@@ -1,6 +1,5 @@
 package com.foodlab.foodlab.services;
 
-
 import com.foodlab.foodlab.models.Usuario;
 import com.foodlab.foodlab.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +21,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con email: " + email));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        // Usamos el campo 'rol' que añadimos a la entidad Usuario
-        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(usuario.getRol()));
-
-        return new User(
-                usuario.getEmail(),
-                usuario.getContrasenia(),
-                authorities
-        );
+        return org.springframework.security.core.userdetails.User
+                .withUsername(usuario.getEmail())
+                .password(usuario.getContrasenia())
+                .roles("USER")
+                .build();
     }
+
 }
-
-

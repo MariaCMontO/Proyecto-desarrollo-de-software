@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/foodlab/usuarios")
 @Tag(name = "Usuarios", description = "API para la gestion de usuarios")
-@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE})
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:8080"}, allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE})
 /**
  *
  * @author MATEO
@@ -150,7 +150,7 @@ public class UsuarioController {
         Optional<Usuario> existingUsuario = usuarioService.findById(id);
         if (existingUsuario.isPresent()) {
             usuario.setId(id);
-            Usuario updatedUsuario = usuarioService.update(usuario);
+            Usuario updatedUsuario = usuarioService.update(id,usuario);
             return new ResponseEntity<>(updatedUsuario, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

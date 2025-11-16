@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.foodlab.foodlab.repositories.MetodoPagoRepository;
+import com.foodlab.foodlab.repositories.PreferenciaRepository;
 import com.foodlab.foodlab.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,6 +42,8 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MetodoPagoRepository metodoPagoRepository;
+    private final PreferenciaRepository preferenciaRepository;
 
     @Autowired
     private JwtService jwtService;
@@ -50,11 +53,14 @@ public class UsuarioService {
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired  //Motor de inyeccion de dependencias 
-    public UsuarioService(UsuarioRepository usuarioRepository, MetodoPagoRepository metodoPagoRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRepository usuarioRepository, MetodoPagoRepository metodoPagoRepository, PreferenciaRepository preferenciaRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
-        // Inicializamos algunos datos de ejemplo
-        //initSampleData();
+        this.metodoPagoRepository = metodoPagoRepository;
+        this.preferenciaRepository = preferenciaRepository;
+
+//         Inicializamos algunos datos de ejemplo
+//        initSampleData();
     }
 
     private void initSampleData() {
@@ -113,15 +119,99 @@ public class UsuarioService {
         );
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
-
+        Usuario usuario = usuarioRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         String token = jwtService.generateToken(userDetails);
 
-        return new LoginResponseDTO(token);
+        return new LoginResponseDTO(token, usuario);
     }
 
     // Actualizar un usuario 
-    public Usuario update(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    public Usuario update(Integer id, Usuario usuarioData) {
+        Usuario existente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // datos simples
+        existente.setNombre(usuarioData.getNombre());
+        existente.setEmail(usuarioData.getEmail());
+        existente.setCelular(usuarioData.getCelular());
+        existente.setDireccion(usuarioData.getDireccion());
+
+        MetodoPago mp = usuarioData.getMetodoPago();
+
+        if (mp != null) {
+
+            // 4. Está vacío → ignorar
+            boolean estaVacio
+                    = (mp.getCvv() == null)
+                    && (mp.getFranquicia() == null || mp.getFranquicia().isBlank())
+                    && (mp.getNumeroTarjeta() == null)
+                    && (mp.getTipoTarjeta() == null || mp.getTipoTarjeta().isBlank());
+
+            if (!estaVacio) {
+                // 2. Tiene id → actualizar
+                if (mp.getId() != null) {
+                    MetodoPago existenteMP = metodoPagoRepository.findById(mp.getId())
+                            .orElseThrow(() -> new RuntimeException("Método de pago no encontrado"));
+
+                    existenteMP.setCvv(mp.getCvv());
+                    existenteMP.setFranquicia(mp.getFranquicia());
+                    existenteMP.setNumeroTarjeta(mp.getNumeroTarjeta());
+                    existenteMP.setTipoTarjeta(mp.getTipoTarjeta());
+
+                    existente.setMetodoPago(existenteMP);
+
+                } else {
+                    // 3. No tiene id pero sí datos → crear nuevo
+                    MetodoPago nuevoMP = new MetodoPago();
+                    nuevoMP.setCvv(mp.getCvv());
+                    nuevoMP.setFranquicia(mp.getFranquicia());
+                    nuevoMP.setNumeroTarjeta(mp.getNumeroTarjeta());
+                    nuevoMP.setTipoTarjeta(mp.getTipoTarjeta());
+
+                    MetodoPago guardado = metodoPagoRepository.save(nuevoMP);
+                    existente.setMetodoPago(guardado);
+                }
+            }
+        }
+        Preferencia pref = usuarioData.getPreferencia();
+
+        if (pref != null) {
+
+            boolean estaVaciaPref
+                    = (pref.getComidaFavorita() == null || pref.getComidaFavorita().isBlank())
+                    && (pref.getExpectativas() == null || pref.getExpectativas().isBlank())
+                    && (pref.getIngredientes() == null || pref.getIngredientes().isBlank())
+                    && (pref.getRestricciones() == null || pref.getRestricciones().isBlank());
+
+            if (!estaVaciaPref) {
+
+                if (pref.getId() != null) {
+                    Preferencia existentePref = preferenciaRepository.findById(pref.getId())
+                            .orElseThrow(() -> new RuntimeException("Preferencia no encontrada"));
+
+                    existentePref.setComidaFavorita(pref.getComidaFavorita());
+                    existentePref.setExpectativas(pref.getExpectativas());
+                    existentePref.setIngredientes(pref.getIngredientes());
+                    existentePref.setRestricciones(pref.getRestricciones());
+
+                    existente.setPreferencia(existentePref);
+
+                } else {
+                    // Crear nueva preferencia
+                    Preferencia nueva = new Preferencia();
+                    nueva.setComidaFavorita(pref.getComidaFavorita());
+                    nueva.setExpectativas(pref.getExpectativas());
+                    nueva.setIngredientes(pref.getIngredientes());
+                    nueva.setRestricciones(pref.getRestricciones());
+
+                    Preferencia guardada = preferenciaRepository.save(nueva);
+                    existente.setPreferencia(guardada);
+                }
+            }
+        }
+
+        return usuarioRepository.save(existente);
     }
 
     // Actualización parcial 
@@ -131,16 +221,19 @@ public class UsuarioService {
 
         updates.forEach((key, value) -> {
             switch (key) {
-                case "nombre" -> usuario.setNombre((String) value);
-                case "email" -> usuario.setEmail((String) value);
-                case "contrasenia" -> usuario.setContrasenia((String) value);
-                case "direccion" -> usuario.setDireccion((String) value);
+                case "nombre" ->
+                    usuario.setNombre((String) value);
+                case "email" ->
+                    usuario.setEmail((String) value);
+                case "contrasenia" ->
+                    usuario.setContrasenia((String) value);
+                case "direccion" ->
+                    usuario.setDireccion((String) value);
             }
         });
 
         return usuarioRepository.save(usuario);
     }
-
 
     // Eliminar un usuario
     public boolean deleteById(Integer id) {

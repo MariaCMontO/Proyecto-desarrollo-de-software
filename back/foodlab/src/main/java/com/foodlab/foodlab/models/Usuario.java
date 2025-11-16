@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
-    
+
     // Atributos:
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,11 +34,12 @@ public class Usuario {
     @Column
     private String direccion;
     @Column
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String rol = "CLIENTE";
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "user", "factura", "products"})
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Order> ordenes;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -50,7 +51,7 @@ public class Usuario {
     @JoinColumn(name = "preferencia_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "usuario"})
     private Preferencia preferencia;
-    
+
     // Constructor:
     public Usuario() {
     }
@@ -62,7 +63,6 @@ public class Usuario {
         this.celular = celular;
         this.direccion = direccion;
         this.rol = rol;
-
     }
 
     public Integer getId() {

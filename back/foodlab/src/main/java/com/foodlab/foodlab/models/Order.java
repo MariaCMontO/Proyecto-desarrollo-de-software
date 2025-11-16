@@ -41,7 +41,7 @@
        private Receipt factura;
 
        @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-       @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "order", "producto"})
+       @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "order"})
        private List<OrdenProducto> products;
 
        public Order() {

@@ -49,22 +49,39 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("api/foodlab/usuarios/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "api/foodlab/usuarios").permitAll()
-
-                        .anyRequest().authenticated()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/foodlab/productos").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/foodlab/ordenes").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/foodlab/usuarios").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/foodlab/usuarios").permitAll()
+                .requestMatchers("/api/foodlab/usuarios/login").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/api/foodlab/usuarios/**").authenticated()
+                .anyRequest().authenticated()
                 )
-
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-
                 .authenticationProvider(authenticationProvider())
-
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
+    @Bean
+    public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
+        var cors = new org.springframework.web.cors.CorsConfiguration();
+        cors.setAllowCredentials(true);
+        cors.addAllowedOrigin("http://localhost:5173"); // 🔥 React Vite
+        cors.addAllowedOrigin("http://localhost:8080");
+        cors.addAllowedHeader("*");
+        cors.addAllowedMethod("*");
+        cors.addExposedHeader("Authorization");
+
+        var source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", cors);
+        return source;
+    }
+
 }
